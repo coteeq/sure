@@ -11,4 +11,5 @@ set(CMAKE_RUNTIME_OUTPUT_DIRECTORY "bin")
 
 add_subdirectory(third_party)
 
+include(cmake/Platform.cmake)
 add_subdirectory(context)
