@@ -11,5 +11,7 @@ set(CMAKE_RUNTIME_OUTPUT_DIRECTORY "bin")
 
 add_subdirectory(third_party)
 
+option(CONTEXT_DEVELOPER "Context development mode" OFF)
+
 include(cmake/Platform.cmake)
 add_subdirectory(context)

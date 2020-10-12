@@ -19,6 +19,8 @@ target_link_libraries(context PUBLIC wheels pthread)
 
 # Linters
 
+if(CONTEXT_DEVELOPER)
+
 if(CLANG_FORMAT_TOOL)
     add_clang_format_target(
             context_clang_format
@@ -32,4 +34,6 @@ if(CLANG_TIDY_TOOL)
             ${CMAKE_CURRENT_SOURCE_DIR}
             ${LIB_INCLUDE_PATH}
             ${LIB_HEADERS} ${LIB_CXX_SOURCES})
+endif()
+
 endif()
