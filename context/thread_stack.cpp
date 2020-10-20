@@ -14,7 +14,7 @@ using wheels::MemSpan;
 //////////////////////////////////////////////////////////////////////
 
 static MemSpan GetThisThreadStack() {
-  void *start{nullptr};
+  void* start{nullptr};
   size_t size{0};
 
 #if APPLE
@@ -32,9 +32,8 @@ static MemSpan GetThisThreadStack() {
   retcode = pthread_attr_getstack(&attrs, &start, &size);
   CHECK_RESULT(retcode, "cannot get stack address and size");
 
-    retcode = pthread_attr_destroy(&attrs);
+  retcode = pthread_attr_destroy(&attrs);
   CHECK_RESULT(retcode, "pthread_attr_destroy failed");
-
 #endif
 
   return {static_cast<char*>(start), size};
