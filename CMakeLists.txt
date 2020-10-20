@@ -15,3 +15,7 @@ option(CONTEXT_DEVELOPER "Context development mode" OFF)
 
 include(cmake/Platform.cmake)
 add_subdirectory(context)
+
+if(CONTEXT_DEVELOPER)
+    add_subdirectory(tests)
+endif()
