@@ -16,8 +16,12 @@ using wheels::MemSpan;
 typedef void (*Trampoline)();
 
 struct ExecutionContext {
+  // 1) Machine context (registers)
+
   // Execution context saved on top of suspended fiber/thread stack
   void* rsp_;
+
+  // 2) Sanitizers context
 
 #if __has_feature(address_sanitizer)
   const void* stack_;
@@ -28,6 +32,10 @@ struct ExecutionContext {
   bool hold_fiber_{false};
   void* fiber_;
 #endif
+
+  // 3) Opaque exceptions context
+  // https://itanium-cxx-abi.github.io/cxx-abi/abi-eh.html
+  uintptr_t exceptions_state_buf_[2];
 
   // Empty context, cannot be a target for SwitchTo
   ExecutionContext();

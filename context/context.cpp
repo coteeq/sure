@@ -3,7 +3,10 @@
 #include <context/stack.hpp>
 #include <context/thread_stack.hpp>
 
+#include <cxxabi.h>
+
 #include <cstdint>
+#include <cstring>
 
 namespace context {
 
@@ -63,6 +66,29 @@ static void* SetupStack(MemSpan stack, Trampoline trampoline) {
 
 //////////////////////////////////////////////////////////////////////
 
+namespace __cxxabiv1 {  // NOLINT
+
+struct __cxa_eh_globals {           // NOLINT
+  void* caughtExceptions;           // NOLINT
+  unsigned int uncaughtExceptions;  // NOLINT
+};
+
+// NOLINTNEXTLINE
+extern "C" __cxa_eh_globals* __cxa_get_globals() noexcept;
+
+}  // namespace __cxxabiv1
+
+static void SwitchExceptionsContext(ExecutionContext& from,
+                                    ExecutionContext& to) {
+  static const size_t kStateSize = 16;
+
+  auto* this_thread_exceptions = __cxxabiv1::__cxa_get_globals();
+  memcpy(from.exceptions_state_buf_, this_thread_exceptions, kStateSize);
+  memcpy(this_thread_exceptions, to.exceptions_state_buf_, kStateSize);
+}
+
+//////////////////////////////////////////////////////////////////////
+
 ExecutionContext::ExecutionContext() {
 }
 
@@ -93,9 +119,12 @@ static thread_local ExecutionContext* from = nullptr;
 void ExecutionContext::SwitchTo(ExecutionContext& target) {
   from = this;
 
+  SwitchExceptionsContext(*this, target);
+
 #if __has_feature(address_sanitizer)
   void* fake_stack;
-  __sanitizer_start_switch_fiber(&fake_stack, target.stack_, target.stack_size_);
+  __sanitizer_start_switch_fiber(&fake_stack, target.stack_,
+                                 target.stack_size_);
 #endif
 
 #if __has_feature(thread_sanitizer)
@@ -109,18 +138,22 @@ void ExecutionContext::SwitchTo(ExecutionContext& target) {
   // NB: "from" context != target
 
 #if __has_feature(address_sanitizer)
-  __sanitizer_finish_switch_fiber(fake_stack, &(from->stack_), &(from->stack_size_));
+  __sanitizer_finish_switch_fiber(fake_stack, &(from->stack_),
+                                  &(from->stack_size_));
 #endif
 }
 
 void ExecutionContext::AfterStart() {
 #if __has_feature(address_sanitizer)
-  __sanitizer_finish_switch_fiber(nullptr, &(from->stack_), &(from->stack_size_));
+  __sanitizer_finish_switch_fiber(nullptr, &(from->stack_),
+                                  &(from->stack_size_));
 #endif
 }
 
 void ExecutionContext::Return(ExecutionContext& target) {
   from = this;
+
+  SwitchExceptionsContext(*this, target);
 
 #if __has_feature(address_sanitizer)
   __sanitizer_start_switch_fiber(nullptr, target.stack_, target.stack_size_);
