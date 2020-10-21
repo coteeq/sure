@@ -9,6 +9,8 @@ add_compile_options(-Wall -Wextra -Wpedantic -g -fno-omit-frame-pointer)
 
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY "bin")
 
+include(cmake/Sanitize.cmake)
+
 add_subdirectory(third_party)
 
 option(CONTEXT_DEVELOPER "Context development mode" OFF)
