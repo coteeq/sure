@@ -27,6 +27,7 @@ class Stack {
     return allocation_.Size();
   }
 
+  // With guard page!
   MemSpan AsMemSpan() const;
 
  private:
