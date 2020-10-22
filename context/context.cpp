@@ -3,10 +3,9 @@
 #include <context/stack.hpp>
 #include <context/thread_stack.hpp>
 
-#include <cxxabi.h>
-
 #include <cstdint>
 #include <cstring>
+#include <stdexcept>
 
 namespace context {
 
@@ -68,10 +67,7 @@ static void* SetupStack(MemSpan stack, Trampoline trampoline) {
 
 namespace __cxxabiv1 {  // NOLINT
 
-struct __cxa_eh_globals {           // NOLINT
-  void* caughtExceptions;           // NOLINT
-  unsigned int uncaughtExceptions;  // NOLINT
-};
+struct __cxa_eh_globals;  // NOLINT
 
 // NOLINTNEXTLINE
 extern "C" __cxa_eh_globals* __cxa_get_globals() noexcept;
