@@ -112,6 +112,8 @@ ExecutionContext::~ExecutionContext() {
 
 static thread_local ExecutionContext* from = nullptr;
 
+// NB: `SwitchTo` operates on 3 (!) contexts: this, target, to
+
 void ExecutionContext::SwitchTo(ExecutionContext& target) {
   from = this;
 
@@ -128,7 +130,6 @@ void ExecutionContext::SwitchTo(ExecutionContext& target) {
   __tsan_switch_to_fiber(target.fiber_, 0);
 #endif
 
-  // Switch machine context
   SwitchMachineContext(&rsp_, &target.rsp_);
 
   // NB: "from" context != target
@@ -159,7 +160,6 @@ void ExecutionContext::Return(ExecutionContext& target) {
   __tsan_switch_to_fiber(target.fiber_, 0);
 #endif
 
-  // Switch machine context
   SwitchMachineContext(rsp_, &target.rsp_);
 }
 

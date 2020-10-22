@@ -15,6 +15,11 @@ using wheels::MemSpan;
 // TODO(Lipovsky): closure instead of void(void) function
 typedef void (*Trampoline)();
 
+// Execution Context =
+// 1) Machine context (registers) +
+// 2) [Address | Thread] sanitizer context +
+// 3) Exceptions context
+
 struct ExecutionContext {
   // 1) Machine context (registers)
 
