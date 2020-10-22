@@ -18,7 +18,7 @@ typedef void (*Trampoline)();
 struct ExecutionContext {
   // 1) Machine context (registers)
 
-  // Execution context saved on top of suspended fiber/thread stack
+  // Machine context saved on top of the suspended stack
   void* rsp_;
 
   // 2) Sanitizers context

@@ -4,12 +4,12 @@
   #define FUNCTION_NAME(name) name
 #endif
 
-.global FUNCTION_NAME(SwitchContext)
+.global FUNCTION_NAME(SwitchMachineContext)
 
-# SwitchContext(from, to)
+# SwitchMachineContext(from, to)
 
-FUNCTION_NAME(SwitchContext):
-    # SwitchContext frame created on top of the current stack
+FUNCTION_NAME(SwitchMachineContext):
+    # SwitchMachineContext frame created on top of the current stack
 
     # 1. Save current execution context to 'from'
 
@@ -28,10 +28,10 @@ FUNCTION_NAME(SwitchContext):
 
     # Switch stacks
 
-    # 1.2 Save current stack pointer to 'from' ExecutionContext
+    # 1.2 Save current stack pointer to 'from'
     movq %rsp, (%rdi) # from->rsp_ := rsp
 
-    # 2. Activate 'to' execution context
+    # 2. Activate 'to' machine context
 
     # 2.1 Set stack pointer to target stack
     movq (%rsi), %rsp # rsp := to->rsp_
@@ -46,6 +46,6 @@ FUNCTION_NAME(SwitchContext):
     popq %r14
     popq %r15
 
-    # Pop current SwitchContext frame from target stack
+    # Pop current SwitchMachineContext frame from target stack
 
     retq

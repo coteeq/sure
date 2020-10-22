@@ -22,7 +22,7 @@ namespace context {
 //////////////////////////////////////////////////////////////////////
 
 // Switch between ExecutionContext-s
-extern "C" void SwitchContext(ExecutionContext* from, ExecutionContext* to);
+extern "C" void SwitchMachineContext(void* from, void* to);
 
 //////////////////////////////////////////////////////////////////////
 
@@ -32,7 +32,7 @@ struct StackSavedContext {
   // in context.S at the 'Switch stacks' comment
 
   // Callee-saved registers
-  // Saved manually in SwitchContext
+  // Saved manually in SwitchMachineContext
   void* rbp;
   void* rbx;
 
@@ -129,7 +129,7 @@ void ExecutionContext::SwitchTo(ExecutionContext& target) {
 #endif
 
   // Switch machine context
-  SwitchContext(this, &target);
+  SwitchMachineContext(&rsp_, &target.rsp_);
 
   // NB: "from" context != target
 
@@ -160,7 +160,7 @@ void ExecutionContext::Return(ExecutionContext& target) {
 #endif
 
   // Switch machine context
-  SwitchContext(this, &target);
+  SwitchMachineContext(rsp_, &target.rsp_);
 }
 
 }  // namespace context
