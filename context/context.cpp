@@ -116,7 +116,7 @@ static thread_local ExecutionContext* from = nullptr;
 // SwitchTo: this -> target -> ... -> from -> this
 
 void ExecutionContext::SwitchTo(ExecutionContext& target) {
-  // Prepare this-> target switch
+  // Prepare this->target switch
 
   from = this;
 
@@ -136,8 +136,6 @@ void ExecutionContext::SwitchTo(ExecutionContext& target) {
   SwitchMachineContext(&rsp_, &target.rsp_);
 
   // Finalize from->this switch
-
-  // NB: "from" context != target
 
 #if __has_feature(address_sanitizer)
   __sanitizer_finish_switch_fiber(fake_stack, &(from->stack_),
