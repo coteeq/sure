@@ -21,7 +21,7 @@ void ChildRoutine() {
 
   std::cout << "Child" << std::endl;
 
-  child_ctx.Return(main_ctx);
+  child_ctx.ExitTo(main_ctx);
 }
 
 TEST_SUITE(ExecutionContext1) {

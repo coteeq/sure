@@ -150,7 +150,7 @@ void ExecutionContext::AfterStart() {
 #endif
 }
 
-void ExecutionContext::Return(ExecutionContext& target) {
+void ExecutionContext::ExitTo(ExecutionContext& target) {
   from = this;
 
   SwitchExceptionsContext(*this, target);

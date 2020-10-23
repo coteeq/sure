@@ -56,8 +56,12 @@ struct ExecutionContext {
   void SwitchTo(ExecutionContext& target);
 
   // Use in trampoline:
+
+  // Finalize first context switch
   void AfterStart();
-  void Return(ExecutionContext& target);
+
+  // Leave current context forever
+  [[noreturn]] void ExitTo(ExecutionContext& target);
 };
 
 }  // namespace context
