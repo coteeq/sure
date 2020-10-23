@@ -61,7 +61,8 @@ struct ExecutionContext {
   void AfterStart();
 
   // Leave current context forever
-  [[noreturn]] void ExitTo(ExecutionContext& target);
+  // Never returns
+  void ExitTo(ExecutionContext& target);
 };
 
 }  // namespace context

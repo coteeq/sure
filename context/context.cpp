@@ -3,6 +3,8 @@
 #include <context/stack.hpp>
 #include <context/thread_stack.hpp>
 
+#include <wheels/support/compiler.hpp>
+
 #include <cstdint>
 #include <cstring>
 #include <stdexcept>
@@ -164,6 +166,8 @@ void ExecutionContext::ExitTo(ExecutionContext& target) {
 #endif
 
   SwitchMachineContext(rsp_, &target.rsp_);
+
+  WHEELS_UNREACHABLE();
 }
 
 }  // namespace context
