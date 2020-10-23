@@ -26,9 +26,9 @@ extern "C" void SwitchMachineContext(void* from, void* to);
 
 //////////////////////////////////////////////////////////////////////
 
-// View for stack-saved context
-struct StackSavedContext {
-  // Layout of the StackSavedContext matches the layout of the stack
+// View for stack-saved machine context
+struct StackSavedMachineContext {
+  // Layout of the StackSavedMachineContext matches the layout of the stack
   // in context.S at the 'Switch stacks' comment
 
   // Callee-saved registers
@@ -55,9 +55,9 @@ static void* SetupStack(MemSpan stack, Trampoline trampoline) {
   builder.AlignNextPush(16);
 
   // Reserve space for stack-saved context
-  builder.Allocate(sizeof(StackSavedContext));
+  builder.Allocate(sizeof(StackSavedMachineContext));
 
-  auto* saved_context = (StackSavedContext*)builder.Top();
+  auto* saved_context = (StackSavedMachineContext*)builder.Top();
   saved_context->rip = (void*)trampoline;
 
   return saved_context;
