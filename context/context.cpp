@@ -113,8 +113,11 @@ ExecutionContext::~ExecutionContext() {
 static thread_local ExecutionContext* from = nullptr;
 
 // NB: `SwitchTo` operates on 3 (!) contexts: this, target, to
+// SwitchTo: this -> target -> ... -> from -> this
 
 void ExecutionContext::SwitchTo(ExecutionContext& target) {
+  // Prepare this-> target switch
+
   from = this;
 
   SwitchExceptionsContext(*this, target);
@@ -131,6 +134,8 @@ void ExecutionContext::SwitchTo(ExecutionContext& target) {
 #endif
 
   SwitchMachineContext(&rsp_, &target.rsp_);
+
+  // Finalize from->this switch
 
   // NB: "from" context != target
 
