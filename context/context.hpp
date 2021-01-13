@@ -9,7 +9,6 @@ namespace context {
 
 using wheels::MemSpan;
 
-// TODO(Lipovsky): closure instead of void(void) function
 typedef void (*Trampoline)();
 
 struct ExecutionContext {
