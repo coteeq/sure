@@ -4,7 +4,6 @@
 
 #include <cstdint>
 #include <cstring>
-#include <stdexcept>
 
 namespace context {
 
@@ -17,26 +16,6 @@ namespace context {
 #if __has_feature(thread_sanitizer)
 #pragma message("Annotate context switch for Thread Sanitizer")
 #endif
-
-//////////////////////////////////////////////////////////////////////
-
-namespace __cxxabiv1 {  // NOLINT
-
-struct __cxa_eh_globals;  // NOLINT
-
-// NOLINTNEXTLINE
-extern "C" __cxa_eh_globals* __cxa_get_globals() noexcept;
-
-}  // namespace __cxxabiv1
-
-static void SwitchExceptionsContext(ExecutionContext& from,
-                                    ExecutionContext& to) {
-  static const size_t kStateSize = 16;
-
-  auto* this_thread_exceptions = __cxxabiv1::__cxa_get_globals();
-  memcpy(from.exceptions_state_buf_, this_thread_exceptions, kStateSize);
-  memcpy(this_thread_exceptions, to.exceptions_state_buf_, kStateSize);
-}
 
 //////////////////////////////////////////////////////////////////////
 
@@ -75,7 +54,7 @@ void ExecutionContext::SwitchTo(ExecutionContext& target) {
 
   from = this;
 
-  SwitchExceptionsContext(*this, target);
+  SwitchExceptionsContext(exceptions_ctx_, target.exceptions_ctx_);
 
 #if __has_feature(address_sanitizer)
   void* fake_stack;
@@ -109,7 +88,7 @@ void ExecutionContext::AfterStart() {
 void ExecutionContext::ExitTo(ExecutionContext& target) {
   from = this;
 
-  SwitchExceptionsContext(*this, target);
+  SwitchExceptionsContext(exceptions_ctx_, target.exceptions_ctx_);
 
 #if __has_feature(address_sanitizer)
   __sanitizer_start_switch_fiber(nullptr, target.stack_, target.stack_size_);
