@@ -1,5 +1,6 @@
 #pragma once
 
+#include <context/trampoline.hpp>
 #include <context/machine_context.hpp>
 
 #include <sanitizer/asan_interface.h>
