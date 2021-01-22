@@ -27,7 +27,7 @@ void ChildRoutine() {
 TEST_SUITE(ExecutionContext1) {
   SIMPLE_TEST(SwitchContext) {
     child_ctx.Setup(stack.AsMemSpan(), ChildRoutine);
-    std::cout << child_ctx.rsp_ << std::endl;
+    //std::cout << child_ctx.rsp_ << std::endl;
 
     std::cout << "Parent" << std::endl;
     main_ctx.SwitchTo(child_ctx);

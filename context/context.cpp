@@ -1,8 +1,5 @@
 #include <context/context.hpp>
 
-#include <context/stack.hpp>
-#include <context/thread_stack.hpp>
-
 #include <wheels/support/compiler.hpp>
 
 #include <cstdint>
@@ -20,50 +17,6 @@ namespace context {
 #if __has_feature(thread_sanitizer)
 #pragma message("Annotate context switch for Thread Sanitizer")
 #endif
-
-//////////////////////////////////////////////////////////////////////
-
-// Switch between ExecutionContext-s
-extern "C" void SwitchMachineContext(void* from, void* to);
-
-//////////////////////////////////////////////////////////////////////
-
-// View for stack-saved machine context
-struct StackSavedMachineContext {
-  // Layout of the StackSavedMachineContext matches the layout of the stack
-  // in context.S at the 'Switch stacks' comment
-
-  // Callee-saved registers
-  // Saved manually in SwitchMachineContext
-  void* rbp;
-  void* rbx;
-
-  void* r12;
-  void* r13;
-  void* r14;
-  void* r15;
-
-  // Saved automatically by 'call' instruction
-  void* rip;
-};
-
-static void* SetupStack(MemSpan stack, Trampoline trampoline) {
-  // https://eli.thegreenplace.net/2011/02/04/where-the-top-of-the-stack-is-on-x86/
-
-  StackBuilder builder(stack.Back());
-
-  // Ensure trampoline will get 16-byte aligned frame pointer (rbp)
-  // 'Next' here means first 'pushq %rbp' in trampoline prologue
-  builder.AlignNextPush(16);
-
-  // Reserve space for stack-saved context
-  builder.Allocate(sizeof(StackSavedMachineContext));
-
-  auto* saved_context = (StackSavedMachineContext*)builder.Top();
-  saved_context->rip = (void*)trampoline;
-
-  return saved_context;
-}
 
 //////////////////////////////////////////////////////////////////////
 
@@ -91,7 +44,7 @@ ExecutionContext::ExecutionContext() {
 }
 
 void ExecutionContext::Setup(MemSpan stack, Trampoline trampoline) {
-  rsp_ = SetupStack(stack, trampoline);
+  machine_ctx_.Setup(stack, trampoline);
 
 #if __has_feature(address_sanitizer)
   stack_ = stack.Data();
@@ -135,7 +88,8 @@ void ExecutionContext::SwitchTo(ExecutionContext& target) {
   __tsan_switch_to_fiber(target.fiber_, 0);
 #endif
 
-  SwitchMachineContext(&rsp_, &target.rsp_);
+  // Switch stacks
+  machine_ctx_.SwitchTo(target.machine_ctx_);
 
   // Finalize from->this switch
 
@@ -165,7 +119,7 @@ void ExecutionContext::ExitTo(ExecutionContext& target) {
   __tsan_switch_to_fiber(target.fiber_, 0);
 #endif
 
-  SwitchMachineContext(rsp_, &target.rsp_);
+  machine_ctx_.SwitchTo(target.machine_ctx_);
 
   WHEELS_UNREACHABLE();
 }

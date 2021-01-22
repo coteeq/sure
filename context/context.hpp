@@ -1,6 +1,6 @@
 #pragma once
 
-#include <wheels/support/memspan.hpp>
+#include <context/machine_context.hpp>
 
 #include <sanitizer/asan_interface.h>
 #include <sanitizer/tsan_interface.h>
@@ -12,9 +12,6 @@ namespace context {
 
 using wheels::MemSpan;
 
-// TODO(Lipovsky): closure instead of void(void) function
-typedef void (*Trampoline)();
-
 // Execution Context =
 // 1) Machine context (registers) +
 // 2) [Address | Thread] sanitizer context +
@@ -23,8 +20,7 @@ typedef void (*Trampoline)();
 struct ExecutionContext {
   // 1) Machine context (registers)
 
-  // Machine context saved on top of the suspended stack
-  void* rsp_;
+  MachineContext machine_ctx_;
 
   // 2) Sanitizers context
 
