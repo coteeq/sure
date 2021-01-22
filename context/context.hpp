@@ -2,6 +2,7 @@
 
 #include <context/trampoline.hpp>
 #include <context/machine_context.hpp>
+#include <context/exceptions.hpp>
 
 #include <sanitizer/asan_interface.h>
 #include <sanitizer/tsan_interface.h>
@@ -35,9 +36,8 @@ struct ExecutionContext {
   void* fiber_;
 #endif
 
-  // 3) Opaque exceptions context
-  // https://itanium-cxx-abi.github.io/cxx-abi/abi-eh.html
-  uintptr_t exceptions_state_buf_[2];
+  // 3) Exceptions
+  ExceptionsContext exceptions_ctx_;
 
   // Empty context, cannot be a target for SwitchTo
   ExecutionContext();
