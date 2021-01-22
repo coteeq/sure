@@ -6,7 +6,7 @@
 
 .global FUNCTION_NAME(SwitchMachineContext)
 
-# SwitchMachineContext(from, to)
+# SwitchMachineContext(from_rsp, to_rsp)
 
 FUNCTION_NAME(SwitchMachineContext):
     # SwitchMachineContext frame created on top of the current stack
@@ -28,13 +28,13 @@ FUNCTION_NAME(SwitchMachineContext):
 
     # Switch stacks
 
-    # 1.2 Save current stack pointer to 'from'
-    movq %rsp, (%rdi) # from->rsp_ := rsp
+    # 1.2 Save current stack pointer to 'from' MachineContext
+    movq %rsp, (%rdi) # from_rsp := rsp
 
     # 2. Activate 'to' machine context
 
     # 2.1 Set stack pointer to target stack
-    movq (%rsi), %rsp # rsp := to->rsp_
+    movq (%rsi), %rsp # rsp := to_rsp
 
     # 2.2 Restore and pop registers saved on target stack
 
