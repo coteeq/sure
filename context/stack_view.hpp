@@ -6,4 +6,4 @@ namespace context {
 
 using StackView = wheels::MemSpan;
 
-}  // context
+}  // namespace context
