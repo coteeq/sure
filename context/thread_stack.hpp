@@ -1,9 +1,9 @@
 #pragma once
 
-#include <wheels/support/memspan.hpp>
+#include <context/stack_view.hpp>
 
 namespace context {
 
-wheels::MemSpan ThisThreadStack();
+StackView ThisThreadStack();
 
 }  // namespace context

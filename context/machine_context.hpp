@@ -6,11 +6,13 @@
 
 namespace context {
 
+using StackView = wheels::MemSpan;
+
 struct MachineContext {
   void* rsp_;
 
-  void Setup(wheels::MemSpan stack, Trampoline trampoline);
-  void SwitchTo(MachineContext& tagret);
+  void Setup(StackView stack, Trampoline trampoline);
+  void SwitchTo(MachineContext& target);
 };
 
 }  // namespace context

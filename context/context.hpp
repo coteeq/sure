@@ -12,8 +12,6 @@
 
 namespace context {
 
-using wheels::MemSpan;
-
 // Execution Context =
 // 1) Machine context (registers) +
 // 2) [Address | Thread] sanitizer context +
@@ -45,7 +43,7 @@ struct ExecutionContext {
   ~ExecutionContext();
 
   // Prepare execution context for running trampoline function
-  void Setup(MemSpan stack, Trampoline trampoline);
+  void Setup(StackView stack, Trampoline trampoline);
 
   // Save the current execution context to 'this' and jump to the
   // 'target' context. 'target' context created directly by Setup or

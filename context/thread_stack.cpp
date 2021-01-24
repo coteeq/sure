@@ -9,11 +9,9 @@
 
 namespace context {
 
-using wheels::MemSpan;
-
 //////////////////////////////////////////////////////////////////////
 
-static MemSpan GetThisThreadStack() {
+static StackView GetThisThreadStack() {
   void* start{nullptr};
   size_t size{0};
 
@@ -41,25 +39,21 @@ static MemSpan GetThisThreadStack() {
 
 //////////////////////////////////////////////////////////////////////
 
-struct ThreadStackBounds {
-  ThreadStackBounds() {
-    Initialize();
-  }
-
-  void Initialize() {
+struct CachedThreadStackView {
+  CachedThreadStackView() {
     stack_ = GetThisThreadStack();
   }
 
-  MemSpan Get() const {
+  StackView Get() const {
     return stack_;
   }
 
-  MemSpan stack_;
+  StackView stack_;
 };
 
-MemSpan ThisThreadStack() {
-  static thread_local ThreadStackBounds bounds;
-  return bounds.Get();
+StackView ThisThreadStack() {
+  static thread_local CachedThreadStackView this_thread_stack;
+  return this_thread_stack.Get();
 }
 
 }  // namespace context

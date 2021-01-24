@@ -1,10 +1,8 @@
 #include <context/machine_context.hpp>
 
-#include <context/stack.hpp>
+#include <context/stack_builder.hpp>
 
 namespace context {
-
-using wheels::MemSpan;
 
 //////////////////////////////////////////////////////////////////////
 
@@ -32,7 +30,7 @@ struct StackSavedMachineContext {
   void* rip;
 };
 
-static void* SetupStack(MemSpan stack, Trampoline trampoline) {
+static void* SetupStack(StackView stack, Trampoline trampoline) {
   // https://eli.thegreenplace.net/2011/02/04/where-the-top-of-the-stack-is-on-x86/
 
   StackBuilder builder(stack.Back());
@@ -50,7 +48,7 @@ static void* SetupStack(MemSpan stack, Trampoline trampoline) {
   return saved_context;
 }
 
-void MachineContext::Setup(MemSpan stack, Trampoline trampoline) {
+void MachineContext::Setup(StackView stack, Trampoline trampoline) {
   rsp_ = SetupStack(stack, trampoline);
 }
 

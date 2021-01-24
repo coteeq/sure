@@ -22,7 +22,7 @@ namespace context {
 ExecutionContext::ExecutionContext() {
 }
 
-void ExecutionContext::Setup(MemSpan stack, Trampoline trampoline) {
+void ExecutionContext::Setup(StackView stack, Trampoline trampoline) {
   machine_ctx_.Setup(stack, trampoline);
 
 #if __has_feature(address_sanitizer)
