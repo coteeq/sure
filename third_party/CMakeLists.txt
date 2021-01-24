@@ -4,13 +4,14 @@ include(FetchContent)
 
 # --------------------------------------------------------------------
 
+# set(FETCHCONTENT_FULLY_DISCONNECTED ON)
+# set(FETCHCONTENT_QUIET OFF)
+
+# --------------------------------------------------------------------
+
 FetchContent_Declare(
         wheels
         GIT_REPOSITORY https://gitlab.com/Lipovsky/wheels.git
         GIT_TAG master
 )
-
-set(FETCHCONTENT_QUIET OFF)
 FetchContent_MakeAvailable(wheels)
-
-# --------------------------------------------------------------------
