@@ -19,7 +19,6 @@ namespace context {
 
 struct ExecutionContext {
   // 1) Machine context (registers)
-
   MachineContext machine_ctx_;
 
   // 2) Sanitizers context
