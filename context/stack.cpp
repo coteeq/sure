@@ -7,8 +7,8 @@ namespace context {
 Stack::Stack(MmapAllocation allocation) : allocation_(std::move(allocation)) {
 }
 
-Stack Stack::Allocate(size_t pages) {
-  auto allocation = MmapAllocation::AllocatePages(pages + 1);
+Stack Stack::AllocatePages(size_t count) {
+  auto allocation = MmapAllocation::AllocatePages(count + 1);
   allocation.ProtectPages(/*offset=*/0, /*count=*/1);
   return Stack{std::move(allocation)};
 }

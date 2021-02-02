@@ -14,7 +14,12 @@ class Stack {
  public:
   Stack() = default;
 
-  static Stack Allocate(size_t pages);
+  static Stack AllocatePages(size_t count);
+
+  // Backward compatibility
+  static Stack Allocate(size_t pages) {
+    return AllocatePages(/*count=*/pages);
+  }
 
   Stack(Stack&& that) = default;
   Stack& operator=(Stack&& that) = default;
