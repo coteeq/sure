@@ -1,12 +1,9 @@
 #pragma once
 
+#include <context/stack_view.hpp>
 #include <context/trampoline.hpp>
 
-#include <wheels/support/memspan.hpp>
-
 namespace context {
-
-using StackView = wheels::MemSpan;
 
 struct MachineContext {
   void* rsp_;
