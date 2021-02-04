@@ -1,8 +1,10 @@
-# context
+# Context
+
+`ExecutionContext` for stackful coroutines and fibers
 
 ## Requirements
 
-- 86-64
+- x86-64
 - Clang++
 
 ## Features
