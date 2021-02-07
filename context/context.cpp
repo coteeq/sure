@@ -46,7 +46,7 @@ ExecutionContext::~ExecutionContext() {
 
 static thread_local ExecutionContext* from = nullptr;
 
-// NB: `SwitchTo` operates on 3 (!) contexts: this, target, to
+// NB: `SwitchTo` operates on 3 (!) contexts: this, target, from
 // SwitchTo: this -> target -> ... -> from -> this
 
 void ExecutionContext::SwitchTo(ExecutionContext& target) {
