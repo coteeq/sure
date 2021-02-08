@@ -14,7 +14,7 @@ extern "C" void SwitchMachineContext(void* from_rsp, void* to_rsp);
 // View for stack-saved machine context
 struct StackSavedMachineContext {
   // Layout of the StackSavedMachineContext matches the layout of the stack
-  // in context.S at the 'Switch stacks' comment
+  // in machine_context.S at the 'Switch stacks' comment
 
   // Callee-saved registers
   // Saved manually in SwitchMachineContext
