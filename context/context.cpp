@@ -44,15 +44,15 @@ ExecutionContext::~ExecutionContext() {
 #endif
 }
 
-static thread_local ExecutionContext* from = nullptr;
+static thread_local ExecutionContext* last = nullptr;
 
-// NB: `SwitchTo` operates on 3 (!) contexts: this, target, from
-// SwitchTo: this -> target -> ... -> from -> this
+// NB: `SwitchTo` operates on 3 (!) contexts: this, target, last
+// SwitchTo: this -> target -> ... -> last -> this
 
 void ExecutionContext::SwitchTo(ExecutionContext& target) {
   // Prepare this->target switch
 
-  from = this;
+  last = this;
 
   SwitchExceptionsContext(exceptions_ctx_, target.exceptions_ctx_);
 
@@ -70,23 +70,23 @@ void ExecutionContext::SwitchTo(ExecutionContext& target) {
   // Switch stacks
   machine_ctx_.SwitchTo(target.machine_ctx_);
 
-  // Finalize from->this switch
+  // Finalize last -> this switch
 
 #if __has_feature(address_sanitizer)
-  __sanitizer_finish_switch_fiber(fake_stack, &(from->stack_),
-                                  &(from->stack_size_));
+  __sanitizer_finish_switch_fiber(fake_stack, &(last->stack_),
+                                  &(last->stack_size_));
 #endif
 }
 
 void ExecutionContext::AfterStart() {
 #if __has_feature(address_sanitizer)
-  __sanitizer_finish_switch_fiber(nullptr, &(from->stack_),
-                                  &(from->stack_size_));
+  __sanitizer_finish_switch_fiber(nullptr, &(last->stack_),
+                                  &(last->stack_size_));
 #endif
 }
 
 void ExecutionContext::ExitTo(ExecutionContext& target) {
-  from = this;
+  last = this;
 
   SwitchExceptionsContext(exceptions_ctx_, target.exceptions_ctx_);
 
