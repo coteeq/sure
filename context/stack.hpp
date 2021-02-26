@@ -30,6 +30,10 @@ class Stack {
   // With guard page!
   wheels::MemSpan AsMemSpan() const;
 
+  StackView View() const {
+    return AsMemSpan();
+  }
+
  private:
   Stack(wheels::MmapAllocation allocation);
 
