@@ -1,6 +1,6 @@
 #include <context/context.hpp>
 
-#include <context/stack.hpp>
+#include <context/stack_builder.hpp>
 
 #include <cstdint>
 
@@ -28,7 +28,7 @@ struct StackSavedMachineContext {
   void* rip;
 };
 
-void ExecutionContext::Setup(MemSpan stack, Trampoline trampoline) {
+void ExecutionContext::Setup(StackView stack, Trampoline trampoline) {
   // https://eli.thegreenplace.net/2011/02/04/where-the-top-of-the-stack-is-on-x86/
 
   StackBuilder builder(stack.Back());
@@ -40,11 +40,11 @@ void ExecutionContext::Setup(MemSpan stack, Trampoline trampoline) {
   // Reserve space for stack-saved machine context
   builder.Allocate(sizeof(StackSavedMachineContext));
 
-  auto* saved_context = (StackSavedMachineContext*)builder.Top();
-  saved_context->rip = (void*)trampoline;
+  auto* stack_saved_context = (StackSavedMachineContext*)builder.Top();
+  stack_saved_context->rip = (void*)trampoline;
 
   // Set current stack top
-  rsp_ = saved_context;
+  rsp_ = stack_saved_context;
 }
 
 void ExecutionContext::SwitchTo(ExecutionContext& target) {
