@@ -2,6 +2,9 @@
 
 #include <utility>
 
+using wheels::MemSpan;
+using wheels::MmapAllocation;
+
 namespace context {
 
 Stack::Stack(MmapAllocation allocation) : allocation_(std::move(allocation)) {

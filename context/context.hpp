@@ -45,9 +45,8 @@ struct ExecutionContext {
   void Setup(StackView stack, Trampoline trampoline);
 
   // Symmetric Control Transfer
-  // Save the current execution context to 'this' and jump to the
-  // 'target' context. 'target' context created directly by Setup or
-  // by another target.SwitchTo(other) call.
+  // 1) Save the current execution context to 'this'
+  // 2) Activate 'target' context
   void SwitchTo(ExecutionContext& target);
 
   // Use in trampoline:

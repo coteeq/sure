@@ -7,9 +7,6 @@
 
 namespace context {
 
-using wheels::MemSpan;
-using wheels::MmapAllocation;
-
 class Stack {
  public:
   Stack() = default;
@@ -31,13 +28,13 @@ class Stack {
   }
 
   // With guard page!
-  MemSpan AsMemSpan() const;
+  wheels::MemSpan AsMemSpan() const;
 
  private:
-  Stack(MmapAllocation allocation);
+  Stack(wheels::MmapAllocation allocation);
 
  private:
-  MmapAllocation allocation_;
+  wheels::MmapAllocation allocation_;
 };
 
 }  // namespace context

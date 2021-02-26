@@ -42,10 +42,10 @@ static void* SetupStack(StackView stack, Trampoline trampoline) {
   // Reserve space for stack-saved context
   builder.Allocate(sizeof(StackSavedMachineContext));
 
-  auto* saved_context = (StackSavedMachineContext*)builder.Top();
-  saved_context->rip = (void*)trampoline;
+  auto* stack_saved_context = (StackSavedMachineContext*)builder.Top();
+  stack_saved_context->rip = (void*)trampoline;
 
-  return saved_context;
+  return stack_saved_context;
 }
 
 void MachineContext::Setup(StackView stack, Trampoline trampoline) {
