@@ -1,5 +1,7 @@
 #pragma once
 
+#include <context/stack_view.hpp>
+
 #include <wheels/support/memspan.hpp>
 #include <wheels/support/mmap_allocation.hpp>
 
