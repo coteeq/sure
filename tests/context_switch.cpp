@@ -9,7 +9,7 @@ using namespace context;
 
 ExecutionContext main_ctx;
 
-Stack stack = Stack::Allocate(8);
+Stack stack = Stack::AllocatePages(8);
 ExecutionContext child_ctx;
 
 void ChildRoutine() {
@@ -26,7 +26,7 @@ void ChildRoutine() {
 
 TEST_SUITE(ExecutionContext1) {
   SIMPLE_TEST(SwitchContext) {
-    child_ctx.Setup(stack.AsMemSpan(), ChildRoutine);
+    child_ctx.Setup(stack.View(), ChildRoutine);
     //std::cout << child_ctx.rsp_ << std::endl;
 
     std::cout << "Parent" << std::endl;

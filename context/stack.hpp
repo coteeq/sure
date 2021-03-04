@@ -15,7 +15,7 @@ class Stack {
 
   static Stack AllocatePages(size_t count);
 
-  // Backward compatibility
+  [[deprecated("Use AllocatePages instead")]]
   static Stack Allocate(size_t pages) {
     return AllocatePages(/*count=*/pages);
   }
@@ -30,10 +30,11 @@ class Stack {
   }
 
   // With guard page!
+  [[deprecated("Use View instead")]]
   wheels::MemSpan AsMemSpan() const;
 
   StackView View() const {
-    return AsMemSpan();
+    return allocation_.AsMemSpan();
   }
 
  private:
