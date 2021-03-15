@@ -4,9 +4,6 @@
 #include <context/machine_context.hpp>
 #include <context/exceptions.hpp>
 
-#include <sanitizer/asan_interface.h>
-#include <sanitizer/tsan_interface.h>
-
 #include <cstdlib>
 #include <cstdint>
 
