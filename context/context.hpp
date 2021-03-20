@@ -36,6 +36,14 @@ struct ExecutionContext {
   // Empty context, cannot be a target for SwitchTo
   ExecutionContext();
 
+  // Non-copyable
+  ExecutionContext(const ExecutionContext&) = delete;
+  ExecutionContext& operator=(const ExecutionContext&) = delete;
+
+  // Non-movable
+  ExecutionContext(ExecutionContext&&) = delete;
+  ExecutionContext& operator=(ExecutionContext&&) = delete;
+
   ~ExecutionContext();
 
   // Prepare execution context for running trampoline function
