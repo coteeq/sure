@@ -61,7 +61,6 @@ struct ExecutionContext {
 
   // Leave current context forever
   // Never returns
-  [[deprecated("Use SwitchTo instead")]]
   void ExitTo(ExecutionContext& target);
 };
 
