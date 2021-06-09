@@ -30,26 +30,47 @@ struct StackSavedMachineContext {
   void* rip;
 };
 
-static void* SetupStack(StackView stack, Trampoline trampoline) {
+// https://eli.thegreenplace.net/2011/09/06/stack-frame-layout-on-x86-64/
+static void ContextTrampoline(void*, void*, void*, void*, void*, void*, void* arg1, void* arg2) {
+  TrampolineWithArgument t = (TrampolineWithArgument)arg1;
+  t(arg2);
+}
+
+static void* SetupStack(StackView stack, TrampolineWithArgument trampoline, void* arg) {
   // https://eli.thegreenplace.net/2011/02/04/where-the-top-of-the-stack-is-on-x86/
 
   StackBuilder builder(stack.Back());
+
+  builder.Allocate(sizeof(uintptr_t) * 3);
 
   // Ensure trampoline will get 16-byte aligned frame pointer (rbp)
   // 'Next' here means first 'pushq %rbp' in trampoline prologue
   builder.AlignNextPush(16);
 
+  ArgumentsListBuilder args(builder.Top());
+  args.Push((void*)trampoline);
+  args.Push(arg);
+
   // Reserve space for stack-saved context
   builder.Allocate(sizeof(StackSavedMachineContext));
 
   auto* stack_saved_context = (StackSavedMachineContext*)builder.Top();
-  stack_saved_context->rip = (void*)trampoline;
+  stack_saved_context->rip = (void*)ContextTrampoline;
 
   return stack_saved_context;
 }
 
+static void AdaptTrampoline(void* arg) {
+  Trampoline t = (Trampoline)arg;
+  t();
+}
+
 void MachineContext::Setup(StackView stack, Trampoline trampoline) {
-  rsp_ = SetupStack(stack, trampoline);
+  rsp_ = SetupStack(stack, AdaptTrampoline, (void*)trampoline);
+}
+
+void MachineContext::Setup(StackView stack, TrampolineWithArgument trampoline, void* arg) {
+  rsp_ = SetupStack(stack, trampoline, arg);
 }
 
 void MachineContext::SwitchTo(MachineContext& target) {

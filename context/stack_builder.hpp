@@ -4,6 +4,20 @@
 
 namespace context {
 
+class ArgumentsListBuilder {
+ public:
+  ArgumentsListBuilder(void* top) : top_((uintptr_t*)top) {
+  }
+
+  void Push(void* arg) {
+    ++top_;
+    *top_ = (uintptr_t)arg;
+  }
+
+ private:
+  uintptr_t* top_;
+};
+
 class StackBuilder {
   using Self = StackBuilder;
 

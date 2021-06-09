@@ -9,6 +9,8 @@ struct MachineContext {
   void* rsp_;
 
   void Setup(StackView stack, Trampoline trampoline);
+  void Setup(StackView stack, TrampolineWithArgument trampoline, void* arg);
+
   void SwitchTo(MachineContext& target);
 };
 
