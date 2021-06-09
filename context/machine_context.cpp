@@ -31,7 +31,7 @@ struct StackSavedMachineContext {
 };
 
 // https://eli.thegreenplace.net/2011/09/06/stack-frame-layout-on-x86-64/
-static void ContextTrampoline(void*, void*, void*, void*, void*, void*, void* arg1, void* arg2) {
+static void MachineContextTrampoline(void*, void*, void*, void*, void*, void*, void* arg1, void* arg2) {
   Trampoline t = (Trampoline)arg1;
   t(arg2);
 }
@@ -55,7 +55,7 @@ static void* SetupStack(StackView stack, Trampoline trampoline, void* arg) {
   builder.Allocate(sizeof(StackSavedMachineContext));
 
   auto* stack_saved_context = (StackSavedMachineContext*)builder.Top();
-  stack_saved_context->rip = (void*)ContextTrampoline;
+  stack_saved_context->rip = (void*)MachineContextTrampoline;
 
   return stack_saved_context;
 }
