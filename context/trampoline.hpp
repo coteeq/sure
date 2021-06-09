@@ -2,8 +2,8 @@
 
 namespace context {
 
-typedef void (*Trampoline)();
+typedef void (*Trampoline)(void* arg);
 
-typedef void (*TrampolineWithArgument)(void*);
+typedef void (*TrampolineWithoutArgs)();
 
 }  // namespace context

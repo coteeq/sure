@@ -25,8 +25,8 @@ namespace context {
 ExecutionContext::ExecutionContext() {
 }
 
-void ExecutionContext::Setup(StackView stack, Trampoline trampoline) {
-  machine_ctx_.Setup(stack, trampoline);
+void ExecutionContext::Setup(StackView stack, Trampoline trampoline, void* arg) {
+  machine_ctx_.Setup(stack, trampoline, arg);
 
 #if __has_feature(address_sanitizer)
   stack_ = stack.Data();
@@ -37,6 +37,16 @@ void ExecutionContext::Setup(StackView stack, Trampoline trampoline) {
   hold_fiber_ = true;
   fiber_ = __tsan_create_fiber(0);
 #endif
+}
+
+static void AdaptTrampoline(void* arg) {
+  TrampolineWithoutArgs t = (TrampolineWithoutArgs)arg;
+  t();
+}
+
+void ExecutionContext::Setup(StackView stack,
+                             TrampolineWithoutArgs trampoline) {
+  Setup(stack, AdaptTrampoline, (void*)trampoline);
 }
 
 ExecutionContext::~ExecutionContext() {

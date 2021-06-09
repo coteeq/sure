@@ -32,11 +32,11 @@ struct StackSavedMachineContext {
 
 // https://eli.thegreenplace.net/2011/09/06/stack-frame-layout-on-x86-64/
 static void ContextTrampoline(void*, void*, void*, void*, void*, void*, void* arg1, void* arg2) {
-  TrampolineWithArgument t = (TrampolineWithArgument)arg1;
+  Trampoline t = (Trampoline)arg1;
   t(arg2);
 }
 
-static void* SetupStack(StackView stack, TrampolineWithArgument trampoline, void* arg) {
+static void* SetupStack(StackView stack, Trampoline trampoline, void* arg) {
   // https://eli.thegreenplace.net/2011/02/04/where-the-top-of-the-stack-is-on-x86/
 
   StackBuilder builder(stack.Back());
@@ -60,16 +60,7 @@ static void* SetupStack(StackView stack, TrampolineWithArgument trampoline, void
   return stack_saved_context;
 }
 
-static void AdaptTrampoline(void* arg) {
-  Trampoline t = (Trampoline)arg;
-  t();
-}
-
-void MachineContext::Setup(StackView stack, Trampoline trampoline) {
-  rsp_ = SetupStack(stack, AdaptTrampoline, (void*)trampoline);
-}
-
-void MachineContext::Setup(StackView stack, TrampolineWithArgument trampoline, void* arg) {
+void MachineContext::Setup(StackView stack, Trampoline trampoline, void* arg) {
   rsp_ = SetupStack(stack, trampoline, arg);
 }
 

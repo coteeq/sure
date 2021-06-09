@@ -47,7 +47,9 @@ struct ExecutionContext {
   ~ExecutionContext();
 
   // Prepare execution context for running trampoline function
-  void Setup(StackView stack, Trampoline trampoline);
+  void Setup(StackView stack, Trampoline trampoline, void* arg);
+
+  void Setup(StackView stack, TrampolineWithoutArgs trampoline);
 
   // Symmetric Control Transfer
   // 1) Save the current execution context to 'this'
