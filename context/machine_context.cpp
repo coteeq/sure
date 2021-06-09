@@ -41,6 +41,7 @@ static void* SetupStack(StackView stack, Trampoline trampoline, void* arg) {
 
   StackBuilder builder(stack.Back());
 
+  // Preallocate space for arguments
   builder.Allocate(sizeof(uintptr_t) * 3);
 
   // Ensure trampoline will get 16-byte aligned frame pointer (rbp)
