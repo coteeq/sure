@@ -21,8 +21,4 @@ char* Stack::Bottom() const {
   return (char*)((std::uintptr_t*)allocation_.End() - 1);
 }
 
-MemSpan Stack::AsMemSpan() const {
-  return allocation_.AsMemSpan();
-}
-
 }  // namespace context

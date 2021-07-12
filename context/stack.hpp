@@ -29,12 +29,8 @@ class Stack {
     return allocation_.Size();
   }
 
-  // With guard page!
-  [[deprecated("Use View instead")]]
-  wheels::MemSpan AsMemSpan() const;
-
-  StackView View() const {
-    return allocation_.AsMemSpan();
+  StackView View() {
+    return allocation_.View();
   }
 
  private:
