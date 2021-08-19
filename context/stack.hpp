@@ -1,8 +1,6 @@
 #pragma once
 
-#include <context/stack_view.hpp>
-
-#include <wheels/support/memspan.hpp>
+#include <wheels/support/mem_view.hpp>
 #include <wheels/support/mmap_allocation.hpp>
 
 #include <cstdint>
@@ -29,7 +27,7 @@ class Stack {
     return allocation_.Size();
   }
 
-  StackView View() {
+  wheels::MutableMemView View() {
     return allocation_.View();
   }
 

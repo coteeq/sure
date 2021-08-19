@@ -1,9 +1,9 @@
 #pragma once
 
-#include <context/stack_view.hpp>
+#include <wheels/support/mem_view.hpp>
 
 namespace context {
 
-StackView ThisThreadStack();
+wheels::MutableMemView ThisThreadStack();
 
 }  // namespace context

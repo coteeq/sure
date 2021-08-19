@@ -11,7 +11,7 @@ namespace context {
 
 //////////////////////////////////////////////////////////////////////
 
-static StackView GetThisThreadStack() {
+static wheels::MutableMemView GetThisThreadStack() {
   void* start{nullptr};
   size_t size{0};
 
@@ -44,14 +44,14 @@ struct CachedThreadStackView {
     stack_ = GetThisThreadStack();
   }
 
-  StackView Get() const {
+  wheels::MutableMemView Get() const {
     return stack_;
   }
 
-  StackView stack_;
+  wheels::MutableMemView stack_;
 };
 
-StackView ThisThreadStack() {
+wheels::MutableMemView ThisThreadStack() {
   static thread_local CachedThreadStackView this_thread_stack;
   return this_thread_stack.Get();
 }

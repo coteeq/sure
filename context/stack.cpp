@@ -2,7 +2,6 @@
 
 #include <utility>
 
-using wheels::MemSpan;
 using wheels::MmapAllocation;
 
 namespace context {

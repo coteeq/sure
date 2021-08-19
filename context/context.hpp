@@ -4,6 +4,8 @@
 #include <context/machine_context.hpp>
 #include <context/exceptions.hpp>
 
+#include <wheels/support/mem_view.hpp>
+
 #include <cstdlib>
 #include <cstdint>
 
@@ -47,9 +49,9 @@ struct ExecutionContext {
   ~ExecutionContext();
 
   // Prepare execution context for running trampoline function
-  void Setup(StackView stack, Trampoline trampoline, void* arg);
+  void Setup(wheels::MutableMemView stack, Trampoline trampoline, void* arg);
 
-  void Setup(StackView stack, TrampolineWithoutArgs trampoline);
+  void Setup(wheels::MutableMemView stack, TrampolineWithoutArgs trampoline);
 
   // Symmetric Control Transfer
   // 1) Save the current execution context to 'this'

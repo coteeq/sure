@@ -25,7 +25,7 @@ namespace context {
 ExecutionContext::ExecutionContext() {
 }
 
-void ExecutionContext::Setup(StackView stack, Trampoline trampoline, void* arg) {
+void ExecutionContext::Setup(wheels::MutableMemView stack, Trampoline trampoline, void* arg) {
   machine_ctx_.Setup(stack, trampoline, arg);
 
 #if __has_feature(address_sanitizer)
@@ -44,7 +44,7 @@ static void AdaptTrampoline(void* arg) {
   t();
 }
 
-void ExecutionContext::Setup(StackView stack,
+void ExecutionContext::Setup(wheels::MutableMemView stack,
                              TrampolineWithoutArgs trampoline) {
   Setup(stack, AdaptTrampoline, (void*)trampoline);
 }
