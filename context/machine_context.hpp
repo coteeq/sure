@@ -2,7 +2,7 @@
 
 #include <context/trampoline.hpp>
 
-#include <wheels/support/mem_view.hpp>
+#include <wheels/memory/view.hpp>
 
 namespace context {
 

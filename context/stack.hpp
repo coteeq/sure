@@ -1,7 +1,7 @@
 #pragma once
 
-#include <wheels/support/mem_view.hpp>
-#include <wheels/support/mmap_allocation.hpp>
+#include <wheels/memory/view.hpp>
+#include <wheels/memory/mmap_allocation.hpp>
 
 #include <cstdint>
 

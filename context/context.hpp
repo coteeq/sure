@@ -4,7 +4,7 @@
 #include <context/machine_context.hpp>
 #include <context/exceptions.hpp>
 
-#include <wheels/support/mem_view.hpp>
+#include <wheels/memory/view.hpp>
 
 #include <cstdlib>
 #include <cstdint>
