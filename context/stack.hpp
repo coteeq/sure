@@ -13,11 +13,6 @@ class Stack {
 
   static Stack AllocatePages(size_t count);
 
-  [[deprecated("Use AllocatePages instead")]]
-  static Stack Allocate(size_t pages) {
-    return AllocatePages(/*count=*/pages);
-  }
-
   Stack(Stack&& that) = default;
   Stack& operator=(Stack&& that) = default;
 
