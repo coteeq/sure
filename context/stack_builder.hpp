@@ -6,16 +6,16 @@ namespace context {
 
 class ArgumentsListBuilder {
  public:
-  ArgumentsListBuilder(void* top) : top_((uintptr_t*)top) {
+  explicit ArgumentsListBuilder(void* rbp) : pos_((uintptr_t*)rbp) {
   }
 
-  void Push(void* arg) {
-    ++top_;
-    *top_ = (uintptr_t)arg;
+  void Add(void* arg) {
+    ++pos_;
+    *pos_ = (uintptr_t)arg;
   }
 
  private:
-  uintptr_t* top_;
+  uintptr_t* pos_;
 };
 
 class StackBuilder {

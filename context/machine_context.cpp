@@ -31,9 +31,9 @@ struct StackSavedMachineContext {
 };
 
 // https://eli.thegreenplace.net/2011/09/06/stack-frame-layout-on-x86-64/
-static void MachineContextTrampoline(void*, void*, void*, void*, void*, void*, void* arg1, void* arg2) {
-  Trampoline t = (Trampoline)arg1;
-  t(arg2);
+static void MachineContextTrampoline(void*, void*, void*, void*, void*, void*, void* arg7, void* arg8) {
+  Trampoline t = (Trampoline)arg7;
+  t(arg8);
 }
 
 static void* SetupStack(wheels::MutableMemView stack, Trampoline trampoline, void* arg) {
@@ -48,9 +48,9 @@ static void* SetupStack(wheels::MutableMemView stack, Trampoline trampoline, voi
   // 'Next' here means first 'pushq %rbp' in trampoline prologue
   builder.AlignNextPush(16);
 
-  ArgumentsListBuilder args(builder.Top());
-  args.Push((void*)trampoline);
-  args.Push(arg);
+  ArgumentsListBuilder args(/*rbp=*/builder.Top());
+  args.Add((void*)trampoline);
+  args.Add(arg);
 
   // Reserve space for stack-saved context
   builder.Allocate(sizeof(StackSavedMachineContext));
