@@ -25,8 +25,8 @@ namespace context {
 ExecutionContext::ExecutionContext() {
 }
 
-void ExecutionContext::Setup(wheels::MutableMemView stack, Trampoline trampoline, void* arg) {
-  machine_ctx_.Setup(stack, trampoline, arg);
+void ExecutionContext::Setup(wheels::MutableMemView stack, ITrampoline* trampoline) {
+  machine_ctx_.Setup(stack, trampoline);
 
 #if __has_feature(address_sanitizer)
   stack_ = stack.Data();
@@ -37,16 +37,6 @@ void ExecutionContext::Setup(wheels::MutableMemView stack, Trampoline trampoline
   hold_fiber_ = true;
   fiber_ = __tsan_create_fiber(0);
 #endif
-}
-
-static void AdaptTrampoline(void* arg) {
-  TrampolineWithoutArgs t = (TrampolineWithoutArgs)arg;
-  t();
-}
-
-void ExecutionContext::Setup(wheels::MutableMemView stack,
-                             TrampolineWithoutArgs trampoline) {
-  Setup(stack, AdaptTrampoline, (void*)trampoline);
 }
 
 ExecutionContext::~ExecutionContext() {
@@ -114,6 +104,11 @@ void ExecutionContext::ExitTo(ExecutionContext& target) {
   machine_ctx_.SwitchTo(target.machine_ctx_);
 
   WHEELS_UNREACHABLE();
+}
+
+void ExecutionContext::Run() {
+  AfterStart();
+  user_trampoline_->Run();
 }
 
 }  // namespace context

@@ -16,8 +16,9 @@ namespace context {
 // 2) [Address | Thread] sanitizer context +
 // 3) Exceptions context
 
-struct ExecutionContext {
+struct ExecutionContext : public ITrampoline {
   // 1) Machine context (registers)
+  ITrampoline* user_trampoline_;
   MachineContext machine_ctx_;
 
   // 2) Sanitizers context
@@ -48,10 +49,8 @@ struct ExecutionContext {
 
   ~ExecutionContext();
 
-  // Prepare execution context for running trampoline function
-  void Setup(wheels::MutableMemView stack, Trampoline trampoline, void* arg);
-
-  void Setup(wheels::MutableMemView stack, TrampolineWithoutArgs trampoline);
+  // Prepare execution context for running ITrampoline::Run
+  void Setup(wheels::MutableMemView stack, ITrampoline* trampoline);
 
   // Symmetric Control Transfer
   // 1) Save the current execution context to 'this'
@@ -60,12 +59,17 @@ struct ExecutionContext {
 
   // Use in trampoline:
 
-  // Finalize first context switch
-  void AfterStart();
-
   // Leave current context forever
   // Never returns
+  [[deprecated]]
   void ExitTo(ExecutionContext& target);
+
+ private:
+  // ITrampoline
+  void Run() override;
+
+  // Finalize first context switch
+  void AfterStart();
 };
 
 }  // namespace context

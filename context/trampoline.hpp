@@ -2,8 +2,10 @@
 
 namespace context {
 
-typedef void (*Trampoline)(void* arg);
+struct ITrampoline {
+  virtual ~ITrampoline() = default;
 
-typedef void (*TrampolineWithoutArgs)();
+  virtual void Run() = 0;
+};
 
 }  // namespace context

@@ -9,7 +9,7 @@ namespace context {
 struct MachineContext {
   void* rsp_;
 
-  void Setup(wheels::MutableMemView stack, Trampoline trampoline, void* arg);
+  void Setup(wheels::MutableMemView stack, ITrampoline* trampoline);
 
   void SwitchTo(MachineContext& target);
 };

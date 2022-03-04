@@ -31,12 +31,12 @@ struct StackSavedMachineContext {
 };
 
 // https://eli.thegreenplace.net/2011/09/06/stack-frame-layout-on-x86-64/
-static void MachineContextTrampoline(void*, void*, void*, void*, void*, void*, void* arg7, void* arg8) {
-  Trampoline t = (Trampoline)arg7;
-  t(arg8);
+static void MachineContextTrampoline(void*, void*, void*, void*, void*, void*, void* arg7) {
+  ITrampoline* t = (ITrampoline*)arg7;
+  t->Run();
 }
 
-static void* SetupStack(wheels::MutableMemView stack, Trampoline trampoline, void* arg) {
+static void* SetupStack(wheels::MutableMemView stack, ITrampoline* trampoline) {
   // https://eli.thegreenplace.net/2011/02/04/where-the-top-of-the-stack-is-on-x86/
 
   StackBuilder builder(stack.Back());
@@ -50,7 +50,6 @@ static void* SetupStack(wheels::MutableMemView stack, Trampoline trampoline, voi
 
   ArgumentsListBuilder args(/*rbp=*/builder.Top());
   args.Add((void*)trampoline);
-  args.Add(arg);
 
   // Reserve space for stack-saved context
   builder.Allocate(sizeof(StackSavedMachineContext));
@@ -61,8 +60,8 @@ static void* SetupStack(wheels::MutableMemView stack, Trampoline trampoline, voi
   return stack_saved_context;
 }
 
-void MachineContext::Setup(wheels::MutableMemView stack, Trampoline trampoline, void* arg) {
-  rsp_ = SetupStack(stack, trampoline, arg);
+void MachineContext::Setup(wheels::MutableMemView stack, ITrampoline* trampoline) {
+  rsp_ = SetupStack(stack, trampoline);
 }
 
 void MachineContext::SwitchTo(MachineContext& target) {

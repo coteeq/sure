@@ -7,6 +7,8 @@
 
 namespace context {
 
+// Stack = MmapAllocation with guard page
+
 class Stack {
  public:
   Stack() = default;
