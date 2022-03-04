@@ -26,7 +26,8 @@ ExecutionContext::ExecutionContext() {
 }
 
 void ExecutionContext::Setup(wheels::MutableMemView stack, ITrampoline* trampoline) {
-  machine_ctx_.Setup(stack, trampoline);
+  user_trampoline_ = trampoline;
+  machine_ctx_.Setup(stack, this);
 
 #if __has_feature(address_sanitizer)
   stack_ = stack.Data();
