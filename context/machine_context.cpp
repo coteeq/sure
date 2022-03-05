@@ -2,6 +2,8 @@
 
 #include <context/stack_builder.hpp>
 
+#include <wheels/support/panic.hpp>
+
 namespace context {
 
 //////////////////////////////////////////////////////////////////////
@@ -34,6 +36,7 @@ struct StackSavedMachineContext {
 static void MachineContextTrampoline(void*, void*, void*, void*, void*, void*, void* arg7) {
   ITrampoline* t = (ITrampoline*)arg7;
   t->Run();
+  WHEELS_PANIC("ITrampoline::Run should never return control");
 }
 
 static void* SetupStack(wheels::MutableMemView stack, ITrampoline* trampoline) {
