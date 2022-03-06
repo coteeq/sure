@@ -1,5 +1,5 @@
 #include <context/context.hpp>
-#include <context/stack.hpp>
+#include <context/stack/stack.hpp>
 
 #include <wheels/test/test_framework.hpp>
 
@@ -13,9 +13,19 @@ Stack stack = Stack::AllocatePages(8);
 ExecutionContext child_ctx;
 
 struct Runner : ITrampoline {
+
+  void Bar() {
+  }
+
+  void Foo() {
+    Bar();
+  }
+
   // Trampoline
   void Run() {
     std::cout << "Child" << std::endl;
+
+    Foo();
 
     child_ctx.SwitchTo(main_ctx);
 

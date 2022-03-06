@@ -6,6 +6,8 @@
 
 namespace context {
 
+// Target architecture: x86-64
+
 struct MachineContext {
   void* rsp_;
 
