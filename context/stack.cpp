@@ -16,8 +16,4 @@ Stack Stack::AllocatePages(size_t count) {
   return Stack{std::move(allocation)};
 }
 
-char* Stack::Bottom() const {
-  return (char*)((std::uintptr_t*)allocation_.End() - 1);
-}
-
 }  // namespace context

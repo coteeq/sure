@@ -18,8 +18,6 @@ class Stack {
   Stack(Stack&& that) = default;
   Stack& operator=(Stack&& that) = default;
 
-  char* Bottom() const;
-
   size_t Size() const {
     return allocation_.Size();
   }

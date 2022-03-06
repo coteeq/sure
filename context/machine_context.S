@@ -4,7 +4,53 @@
   #define FUNCTION_NAME(name) name
 #endif
 
+.global FUNCTION_NAME(SetupMachineContext)
 .global FUNCTION_NAME(SwitchMachineContext)
+
+# https://eli.thegreenplace.net/2011/02/04/where-the-top-of-the-stack-is-on-x86/
+
+# SetupMachineContext(rsp, trampoline, arg)
+
+FUNCTION_NAME(SetupMachineContext):
+    # Arguments
+    # 1) %rdi - bottom of the stack
+    # 2) %rsi - MachineContextTrampoline address
+    # 3) %rdx - argument (user trampoline)
+
+    # Switch to stack
+    movq %rsp, %rbx # tmp := rsp
+    movq %rdi, %rsp # rsp := rdi
+
+    # Just to be safe
+    subq $7, %rsp
+
+    # %rsp must be 16-byte aligned before MachineContextTrampoline call
+    andq $-16, %rsp
+
+    # 7-th argument for MachineContextTrampoline
+    movq %rdx, 8(%rsp)
+
+    # Prepare for context switch
+
+    # 1) Return address for SwitchMachineContext
+    pushq %rsi
+
+    # 2) Callee-saved registers
+    pushq $0 # r15
+    pushq $0 # r14
+    pushq $0 # r13
+    pushq $0 # r12
+    pushq $0 # rbx
+    pushq $0 # rbp
+
+    # Return value for SetupMachineContext
+    movq %rsp, %rax
+
+    # Restore callstack
+    movq %rbx, %rsp # rsp := tmp
+
+    retq
+
 
 # SwitchMachineContext(from_rsp, to_rsp)
 
