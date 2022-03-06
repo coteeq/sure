@@ -14,26 +14,3 @@ enable_language(ASM)
 add_library(context STATIC ${LIB_CXX_SOURCES} ${LIB_ASM_SOURCES} ${LIB_HEADERS})
 target_include_directories(context PUBLIC ${LIB_INCLUDE_PATH})
 target_link_libraries(context PUBLIC wheels pthread)
-
-# --------------------------------------------------------------------
-
-# Linters
-
-if(CONTEXT_DEVELOPER)
-
-if(CLANG_FORMAT_TOOL)
-    add_clang_format_target(
-            context_clang_format
-            ${CMAKE_CURRENT_SOURCE_DIR}
-            ${LIB_HEADERS} ${LIB_CXX_SOURCES})
-endif()
-
-if(CLANG_TIDY_TOOL)
-    add_clang_tidy_target(
-            context_clang_tidy
-            ${CMAKE_CURRENT_SOURCE_DIR}
-            ${LIB_INCLUDE_PATH}
-            ${LIB_HEADERS} ${LIB_CXX_SOURCES})
-endif()
-
-endif()

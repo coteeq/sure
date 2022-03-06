@@ -1,8 +1,6 @@
-#include <context/machine_context.hpp>
+#include <context/arch/x86/machine_context.hpp>
 
 #include <wheels/support/panic.hpp>
-
-namespace context {
 
 //////////////////////////////////////////////////////////////////////
 
@@ -15,11 +13,12 @@ extern "C" void SwitchMachineContext(void* from_rsp, void* to_rsp);
 
 //////////////////////////////////////////////////////////////////////
 
+namespace context {
+
 // https://eli.thegreenplace.net/2011/09/06/stack-frame-layout-on-x86-64/
-static void MachineContextTrampoline(void*, void*, void*, void*, void*, void*, void* arg7) {
+void MachineContextTrampoline(void*, void*, void*, void*, void*, void*, void* arg7) {
   ITrampoline* t = (ITrampoline*)arg7;
   t->Run();
-  WHEELS_PANIC("ITrampoline::Run should never return control");
 }
 
 //////////////////////////////////////////////////////////////////////

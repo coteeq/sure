@@ -14,8 +14,8 @@
 FUNCTION_NAME(SetupMachineContext):
     # Arguments
     # 1) %rdi - bottom of the stack
-    # 2) %rsi - MachineContextTrampoline address
-    # 3) %rdx - argument (user trampoline)
+    # 2) %rsi - trampoline
+    # 3) %rdx - argument
 
     # Switch to stack
     movq %rsp, %rbx # tmp := rsp
@@ -24,10 +24,10 @@ FUNCTION_NAME(SetupMachineContext):
     # Just to be safe
     subq $32, %rsp
 
-    # %rsp must be 16-byte aligned before MachineContextTrampoline call
+    # %rsp must be 16-byte aligned before trampoline call
     andq $-16, %rsp
 
-    # 7-th argument for MachineContextTrampoline
+    # 7-th argument for trampoline
     movq %rdx, 8(%rsp)
 
     # Prepare for context switch
