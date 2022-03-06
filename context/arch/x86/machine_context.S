@@ -9,20 +9,20 @@
 
 # https://eli.thegreenplace.net/2011/02/04/where-the-top-of-the-stack-is-on-x86/
 
-# SetupMachineContext(rsp, trampoline, arg)
+# SetupMachineContext(stack, trampoline, arg)
 
 FUNCTION_NAME(SetupMachineContext):
     # Arguments
     # 1) %rdi - bottom of the stack
     # 2) %rsi - trampoline
-    # 3) %rdx - argument
+    # 3) %rdx - arg
 
     # Switch to stack
-    movq %rsp, %rbx # tmp := rsp
+    movq %rsp, %r11 # tmp := rsp
     movq %rdi, %rsp # rsp := rdi
 
     # Just to be safe
-    subq $32, %rsp
+    subq $64, %rsp
 
     # %rsp must be 16-byte aligned before trampoline call
     andq $-16, %rsp
@@ -47,7 +47,7 @@ FUNCTION_NAME(SetupMachineContext):
     movq %rsp, %rax
 
     # Restore callstack
-    movq %rbx, %rsp # rsp := tmp
+    movq %r11, %rsp # rsp := tmp
 
     retq
 
