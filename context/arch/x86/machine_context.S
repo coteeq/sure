@@ -24,8 +24,9 @@ FUNCTION_NAME(SetupMachineContext):
     # Just to be safe
     subq $64, %rsp
 
-    # %rsp must be 16-byte aligned before trampoline call
+    # trampoline stack must be 16-byte aligned
     andq $-16, %rsp
+    addq $8, %rsp
 
     # 7-th argument for trampoline
     movq %rdx, 8(%rsp)
