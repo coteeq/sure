@@ -22,7 +22,7 @@ FUNCTION_NAME(SetupMachineContext):
     movq %rdi, %rsp # rsp := rdi
 
     # Just to be safe
-    subq $7, %rsp
+    subq $32, %rsp
 
     # %rsp must be 16-byte aligned before MachineContextTrampoline call
     andq $-16, %rsp
