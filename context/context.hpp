@@ -31,12 +31,13 @@ class ExecutionContext : public ITrampoline {
 
   ~ExecutionContext();
 
-  // Prepare execution context for running ITrampoline::Run
+  // Prepare execution context for running trampoline->Run()
+  // on stack `stack`
   void Setup(wheels::MutableMemView stack, ITrampoline* trampoline);
 
   // Symmetric Control Transfer
-  // 1) Save the current execution context to 'this'
-  // 2) Activate 'target' context
+  // 1) Save current execution context to `this`
+  // 2) Activate `target` context
   void SwitchTo(ExecutionContext& target);
 
  private:
