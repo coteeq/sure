@@ -40,6 +40,9 @@ class ExecutionContext : public ITrampoline {
   // 2) Activate `target` context
   void SwitchTo(ExecutionContext& target);
 
+  // Last context switch in ITrampoline::Run
+  void ExitTo(ExecutionContext& target);
+
  private:
   // ITrampoline
   void Run() override;

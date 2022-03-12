@@ -82,6 +82,24 @@ void ExecutionContext::SwitchTo(ExecutionContext& target) {
 #endif
 }
 
+void ExecutionContext::ExitTo(ExecutionContext& target) {
+  last = this;
+
+  SwitchExceptionsContext(exceptions_ctx_, target.exceptions_ctx_);
+
+#if __has_feature(address_sanitizer)
+  __sanitizer_start_switch_fiber(nullptr, target.stack_, target.stack_size_);
+#endif
+
+#if __has_feature(thread_sanitizer)
+  __tsan_switch_to_fiber(target.fiber_, 0);
+#endif
+
+  // Switch stacks
+  machine_ctx_.SwitchTo(target.machine_ctx_);
+}
+
+
 void ExecutionContext::AfterStart() {
 #if __has_feature(address_sanitizer)
   __sanitizer_finish_switch_fiber(nullptr, &(last->stack_),

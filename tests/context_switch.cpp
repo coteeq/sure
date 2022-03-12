@@ -31,7 +31,7 @@ struct Runner : ITrampoline {
 
     std::cout << "Child" << std::endl;
 
-    child_ctx.SwitchTo(main_ctx);
+    child_ctx.ExitTo(main_ctx);
   }
 };
 
