@@ -97,6 +97,8 @@ void ExecutionContext::ExitTo(ExecutionContext& target) {
 
   // Switch stacks
   machine_ctx_.SwitchTo(target.machine_ctx_);
+
+  WHEELS_UNREACHABLE();
 }
 
 
