@@ -88,6 +88,7 @@ void ExecutionContext::ExitTo(ExecutionContext& target) {
   SwitchExceptionsContext(exceptions_ctx_, target.exceptions_ctx_);
 
 #if __has_feature(address_sanitizer)
+  // https://github.com/llvm-mirror/compiler-rt/blob/69445f095c22aac2388f939bedebf224a6efcdaf/include/sanitizer/common_interface_defs.h#L299
   __sanitizer_start_switch_fiber(nullptr, target.stack_, target.stack_size_);
 #endif
 
