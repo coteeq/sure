@@ -54,7 +54,7 @@ static thread_local ExecutionContext* last = nullptr;
 // SwitchTo: this -> target -> ... -> last -> this
 
 void ExecutionContext::SwitchTo(ExecutionContext& target) {
-  // Prepare this->target switch
+  // Prepare this -> target switch
 
   last = this;
 
