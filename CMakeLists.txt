@@ -16,6 +16,7 @@ add_subdirectory(third_party)
 option(CONTEXT_DEVELOPER "Context development mode" OFF)
 
 include(cmake/Platform.cmake)
+include(cmake/Arch.cmake)
 add_subdirectory(context)
 
 if(CONTEXT_DEVELOPER)
