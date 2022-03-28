@@ -16,4 +16,15 @@ Stack Stack::AllocatePages(size_t count) {
   return Stack{std::move(allocation)};
 }
 
+Stack Stack::AllocateBytes(size_t at_least) {
+  const size_t page_size = MmapAllocation::PageSize();
+
+  size_t pages = at_least / page_size;
+  if (at_least % page_size != 0) {
+    ++pages;
+  }
+
+  return Stack::AllocatePages(/*count=*/pages);
+}
+
 }  // namespace context

@@ -13,12 +13,19 @@ class Stack {
  public:
   Stack() = default;
 
+  // Deprecated
   static Stack AllocatePages(size_t count);
+
+  static Stack AllocateBytes(size_t at_least);
 
   Stack(Stack&& that) = default;
   Stack& operator=(Stack&& that) = default;
 
   size_t Size() const {
+    return allocation_.Size();
+  }
+
+  size_t AllocationSize() const {
     return allocation_.Size();
   }
 

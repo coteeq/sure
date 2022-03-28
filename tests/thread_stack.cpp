@@ -12,5 +12,3 @@ TEST_SUITE(ThreadStack) {
     ASSERT_EQ(stack.Data(), context::ThisThreadStack().Data());
   }
 }
-
-RUN_ALL_TESTS()
