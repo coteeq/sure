@@ -4,6 +4,6 @@
 
 namespace context {
 
-wheels::MutableMemView ThisThreadStack();
+wheels::ConstMemView ThisThreadStack();
 
 }  // namespace context
