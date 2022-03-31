@@ -1,4 +1,4 @@
-#include <context/stack/thread_stack.hpp>
+#include <context/stack/thread.hpp>
 
 #include <wheels/support/assert.hpp>
 

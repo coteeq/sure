@@ -15,8 +15,8 @@ set(LIB_SOURCES
         ${LIB_PATH}/trampoline.hpp
         ${LIB_PATH}/stack/mmap.hpp
         ${LIB_PATH}/stack/mmap.cpp
-        ${LIB_PATH}/stack/thread_stack.hpp
-        ${LIB_PATH}/stack/thread_stack.cpp)
+        ${LIB_PATH}/stack/thread.hpp
+        ${LIB_PATH}/stack/thread.cpp)
 
 # Architecture-dependent sources
 
