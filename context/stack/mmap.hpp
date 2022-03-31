@@ -21,10 +21,6 @@ class Stack {
   Stack(Stack&& that) = default;
   Stack& operator=(Stack&& that) = default;
 
-  size_t Size() const {
-    return allocation_.Size();
-  }
-
   size_t AllocationSize() const {
     return allocation_.Size();
   }
