@@ -27,8 +27,4 @@ void MachineContext::Setup(wheels::MutableMemView stack, ITrampoline* trampoline
   rsp_ = SetupMachineContext((void*)stack.End(), (void*)MachineContextTrampoline, trampoline);
 }
 
-void MachineContext::SwitchTo(MachineContext& target) {
-  SwitchMachineContext(&rsp_, &target.rsp_);
-}
-
 }  // namespace context
