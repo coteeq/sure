@@ -69,8 +69,10 @@ class ExecutionContext : public ITrampoline {
   void* fiber_;
 #endif
 
+#if defined(exceptions_context)
   // 3) Exceptions
   ExceptionsContext exceptions_ctx_;
+#endif
 };
 
 }  // namespace context

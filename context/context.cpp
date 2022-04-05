@@ -56,9 +56,13 @@ static thread_local ExecutionContext* last = nullptr;
 void ExecutionContext::SwitchTo(ExecutionContext& target) {
   // Prepare this -> target switch
 
+#if __has_feature(address_sanitizer)
   last = this;
+#endif
 
+#if defined(exceptions_context)
   SwitchExceptionsContext(exceptions_ctx_, target.exceptions_ctx_);
+#endif
 
 #if __has_feature(address_sanitizer)
   void* fake_stack;
@@ -83,9 +87,13 @@ void ExecutionContext::SwitchTo(ExecutionContext& target) {
 }
 
 void ExecutionContext::ExitTo(ExecutionContext& target) {
+#if __has_feature(address_sanitizer)
   last = this;
+#endif
 
+#if defined(exceptions_context)
   SwitchExceptionsContext(exceptions_ctx_, target.exceptions_ctx_);
+#endif
 
 #if __has_feature(address_sanitizer)
   // https://github.com/llvm-mirror/compiler-rt/blob/69445f095c22aac2388f939bedebf224a6efcdaf/include/sanitizer/common_interface_defs.h#L299
