@@ -48,7 +48,9 @@ ExecutionContext::~ExecutionContext() {
 #endif
 }
 
+#if __has_feature(address_sanitizer)
 static thread_local ExecutionContext* last = nullptr;
+#endif
 
 // NB: `SwitchTo` operates on 3 (!) contexts: this, target, last
 // SwitchTo: this -> target -> ... -> last -> this
