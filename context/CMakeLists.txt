@@ -31,7 +31,7 @@ target_link_libraries(context PUBLIC wheels pthread)
 
 if (CONTEXT_EXCEPTIONS)
     message(STATUS "Capture exceptions context")
-    target_compile_definitions(context PRIVATE exceptions_context)
+    target_compile_definitions(context PUBLIC exceptions_context)
 endif()
 
 target_compile_definitions(context PUBLIC ${CONTEXT_ARCH})
