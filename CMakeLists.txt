@@ -21,4 +21,5 @@ add_subdirectory(context)
 
 if(CONTEXT_DEVELOPER)
     add_subdirectory(tests)
+    add_subdirectory(bench)
 endif()
