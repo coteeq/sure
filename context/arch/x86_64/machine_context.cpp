@@ -8,9 +8,6 @@ extern "C" void* SetupMachineContext(void* stack,
                                      void* trampoline,
                                      void* arg);
 
-// Switch between MachineContext-s
-extern "C" void SwitchMachineContext(void* from_rsp, void* to_rsp);
-
 //////////////////////////////////////////////////////////////////////
 
 namespace context {
