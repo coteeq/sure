@@ -14,10 +14,11 @@ include(cmake/Sanitize.cmake)
 add_subdirectory(third_party)
 
 option(CONTEXT_DEVELOPER "Context development mode" OFF)
-option(CONTEXT_EXCEPTIONS "Exceptions context" ON)
+option(CONTEXT_EXCEPTIONS "Capture exceptions context" ON)
 
 include(cmake/Platform.cmake)
 include(cmake/Arch.cmake)
+
 add_subdirectory(context)
 
 if(CONTEXT_DEVELOPER)
