@@ -34,4 +34,4 @@ if (CONTEXT_EXCEPTIONS)
     target_compile_definitions(context PUBLIC exceptions_context)
 endif()
 
-target_compile_definitions(context PUBLIC ${CONTEXT_ARCH})
+target_compile_definitions(context PUBLIC arch_${CONTEXT_ARCH})
