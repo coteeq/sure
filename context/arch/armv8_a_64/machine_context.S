@@ -4,6 +4,8 @@
   #define FUNCTION_NAME(name) name
 #endif
 
+.p2align 4
+
 .global FUNCTION_NAME(SetupMachineContext)
 .global FUNCTION_NAME(SwitchMachineContext)
 
