@@ -30,7 +30,7 @@ target_link_libraries(context PUBLIC wheels pthread)
 # Architecture compile definitions
 
 if (CONTEXT_EXCEPTIONS)
-    message(STATUS "Capture exceptions context")
+    ProjectLog("Capture exceptions context")
     target_compile_definitions(context PUBLIC exceptions_context)
 endif()
 

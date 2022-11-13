@@ -1,4 +1,4 @@
-message(STATUS "Host system processor: ${CMAKE_HOST_SYSTEM_PROCESSOR}")
+ProjectLog("Host system processor: ${CMAKE_HOST_SYSTEM_PROCESSOR}")
 
 # Workaround: default
 set(CONTEXT_ARCH "x86_64")

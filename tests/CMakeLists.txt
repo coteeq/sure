@@ -1,4 +1,4 @@
-message(STATUS "Context tests")
+ProjectLog("Context tests")
 
 # List sources
 
