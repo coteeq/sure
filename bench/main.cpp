@@ -1,11 +1,9 @@
 #include <iostream>
 
-#include <context/context.hpp>
-#include <context/stack/mmap.hpp>
+#include <rails/context.hpp>
+#include <rails/stack/mmap.hpp>
 
-#include <iostream>
-
-using namespace context;
+using namespace rails;
 
 struct Runner : ITrampoline {
  public:
