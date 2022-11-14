@@ -31,7 +31,7 @@ target_link_libraries(rails PUBLIC wheels pthread)
 
 if (RAILS_EXCEPTIONS)
     ProjectLog("Capture exceptions context")
-    target_compile_definitions(rails PUBLIC exceptions_context)
+    target_compile_definitions(rails PUBLIC RAILS_CAPTURE_EXCEPTIONS_CONTEXT)
 endif()
 
 target_compile_definitions(rails PUBLIC arch_${CONTEXT_ARCH})

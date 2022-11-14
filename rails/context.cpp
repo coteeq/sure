@@ -62,7 +62,7 @@ void ExecutionContext::SwitchTo(ExecutionContext& target) {
   last = this;
 #endif
 
-#if defined(exceptions_context)
+#if defined(RAILS_CAPTURE_EXCEPTIONS_CONTEXT)
   SwitchExceptionsContext(exceptions_ctx_, target.exceptions_ctx_);
 #endif
 
@@ -93,7 +93,7 @@ void ExecutionContext::ExitTo(ExecutionContext& target) {
   last = this;
 #endif
 
-#if defined(exceptions_context)
+#if defined(RAILS_CAPTURE_EXCEPTIONS_CONTEXT)
   SwitchExceptionsContext(exceptions_ctx_, target.exceptions_ctx_);
 #endif
 

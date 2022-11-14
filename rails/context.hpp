@@ -69,7 +69,7 @@ class ExecutionContext : public ITrampoline {
   void* fiber_;
 #endif
 
-#if defined(exceptions_context)
+#if defined(RAILS_CAPTURE_EXCEPTIONS_CONTEXT)
   // 3) Exceptions
   ExceptionsContext exceptions_ctx_;
 #endif
