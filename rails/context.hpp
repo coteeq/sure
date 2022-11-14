@@ -1,15 +1,15 @@
 #pragma once
 
-#include <context/trampoline.hpp>
-#include <context/machine_context.hpp>
-#include <context/exceptions.hpp>
+#include <rails/trampoline.hpp>
+#include <rails/machine_context.hpp>
+#include <rails/exceptions.hpp>
 
 #include <wheels/memory/view.hpp>
 
 #include <cstdlib>
 #include <cstdint>
 
-namespace context {
+namespace rails {
 
 // Execution Context =
 // 1) Machine context (registers) +
@@ -75,4 +75,4 @@ class ExecutionContext : public ITrampoline {
 #endif
 };
 
-}  // namespace context
+}  // namespace rails

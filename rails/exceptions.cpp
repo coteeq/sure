@@ -1,4 +1,4 @@
-#include <context/exceptions.hpp>
+#include <rails/exceptions.hpp>
 
 #include <stdexcept>
 // memcpy
@@ -13,7 +13,7 @@ extern "C" __cxa_eh_globals* __cxa_get_globals() noexcept;
 
 }  // namespace __cxxabiv1
 
-namespace context {
+namespace rails {
 
 void SwitchExceptionsContext(ExceptionsContext& from, ExceptionsContext& to) {
   static constexpr size_t kStateSize = sizeof(ExceptionsContext);
@@ -23,4 +23,4 @@ void SwitchExceptionsContext(ExceptionsContext& from, ExceptionsContext& to) {
   memcpy(this_thread_exceptions, to.exceptions_state_buf_, kStateSize);
 }
 
-}  // namespace context
+}  // namespace rails

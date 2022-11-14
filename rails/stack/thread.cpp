@@ -1,4 +1,4 @@
-#include <context/stack/thread.hpp>
+#include <rails/stack/thread.hpp>
 
 #include <wheels/support/assert.hpp>
 
@@ -7,7 +7,7 @@
 #define CHECK_RESULT(retcode, error) \
   WHEELS_VERIFY(retcode == 0, error << ": " << errno)
 
-namespace context {
+namespace rails {
 
 //////////////////////////////////////////////////////////////////////
 
@@ -56,4 +56,4 @@ wheels::ConstMemView ThisThreadStack() {
   return this_thread_stack.Get();
 }
 
-}  // namespace context
+}  // namespace rails

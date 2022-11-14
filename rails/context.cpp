@@ -1,4 +1,4 @@
-#include <context/context.hpp>
+#include <rails/context.hpp>
 
 #include <sanitizer/asan_interface.h>
 #include <sanitizer/tsan_interface.h>
@@ -8,7 +8,7 @@
 #include <cstdint>
 #include <cstring>
 
-namespace context {
+namespace rails {
 
 //////////////////////////////////////////////////////////////////////
 
@@ -125,4 +125,4 @@ void ExecutionContext::Run() {
   user_trampoline_->Run();
 }
 
-}  // namespace context
+}  // namespace rails

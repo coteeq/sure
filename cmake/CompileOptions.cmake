@@ -6,7 +6,7 @@ set(CMAKE_CXX_EXTENSIONS OFF)
 
 add_compile_options(-Wall -Wextra -Wpedantic -g -fno-omit-frame-pointer)
 
-if(CONTEXT_DEVELOPER)
-    ProjectLog(STATUS "Turn warnings into errors")
+if(RAILS_DEVELOPER)
+    ProjectLog("Turn warnings into errors")
     add_compile_options(-Werror)
 endif()

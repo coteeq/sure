@@ -1,10 +1,10 @@
-#include <context/stack/mmap.hpp>
+#include <rails/stack/mmap.hpp>
 
 #include <utility>
 
 using wheels::MmapAllocation;
 
-namespace context {
+namespace rails {
 
 Stack::Stack(MmapAllocation allocation) : allocation_(std::move(allocation)) {
 }
@@ -27,4 +27,4 @@ Stack Stack::AllocateBytes(size_t at_least) {
   return Stack::AllocatePages(/*count=*/pages);
 }
 
-}  // namespace context
+}  // namespace rails

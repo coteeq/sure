@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.9)
-project(context)
+project(rails)
 
 include(cmake/Logging.cmake)
 
@@ -9,17 +9,17 @@ include(cmake/Sanitize.cmake)
 
 add_subdirectory(third_party)
 
-option(CONTEXT_DEVELOPER "Context development mode" OFF)
-option(CONTEXT_EXCEPTIONS "Capture exceptions context" ON)
+option(RAILS_DEVELOPER "Rails development mode" OFF)
+option(RAILS_EXCEPTIONS "Rails exceptions context" ON)
 
 include(cmake/CompileOptions.cmake)
 
 include(cmake/Platform.cmake)
 include(cmake/Arch.cmake)
 
-add_subdirectory(context)
+add_subdirectory(rails)
 
-if(CONTEXT_DEVELOPER)
+if(RAILS_DEVELOPER)
     add_subdirectory(tests)
     add_subdirectory(bench)
 endif()

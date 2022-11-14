@@ -1,10 +1,10 @@
 #pragma once
 
-#include <context/trampoline.hpp>
+#include <rails/trampoline.hpp>
 
 #include <wheels/memory/view.hpp>
 
-namespace context {
+namespace rails {
 
 // Target architecture: armv8-a
 
@@ -16,4 +16,4 @@ struct MachineContext {
   void SwitchTo(MachineContext& target);
 };
 
-}  // namespace context
+}  // namespace rails

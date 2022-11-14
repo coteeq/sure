@@ -1,11 +1,11 @@
-#include <context/context.hpp>
-#include <context/stack/mmap.hpp>
+#include <rails/context.hpp>
+#include <rails/stack/mmap.hpp>
 
 #include <wheels/test/test_framework.hpp>
 
 #include <iostream>
 
-using namespace context;
+using namespace rails;
 
 ExecutionContext main_ctx;
 

@@ -1,4 +1,4 @@
-ProjectLog("Context benchmark")
+ProjectLog("Benchmarks")
 
-add_executable(context_bench main.cpp)
-target_link_libraries(context_bench context wheels)
+add_executable(rails_benchmark main.cpp)
+target_link_libraries(rails_benchmark rails wheels)

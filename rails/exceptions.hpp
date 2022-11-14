@@ -2,7 +2,7 @@
 
 #include <cstdint>
 
-namespace context {
+namespace rails {
 
 // Opaque exceptions context
 struct ExceptionsContext {
@@ -12,4 +12,4 @@ struct ExceptionsContext {
 
 void SwitchExceptionsContext(ExceptionsContext& from, ExceptionsContext& to);
 
-}  // namespace context
+}  // namespace rails

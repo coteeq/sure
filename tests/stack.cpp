@@ -1,8 +1,8 @@
-#include <context/stack/mmap.hpp>
+#include <rails/stack/mmap.hpp>
 
 #include <wheels/test/test_framework.hpp>
 
-using context::Stack;
+using rails::Stack;
 
 TEST_SUITE(Stacks) {
   SIMPLE_TEST(AllocateBytes1) {
