@@ -3,6 +3,9 @@
 #include <rails/context.hpp>
 #include <rails/stack/mmap.hpp>
 
+#include <chrono>
+#include <iostream>
+
 using namespace rails;
 
 struct Runner : ITrampoline {
@@ -40,11 +43,18 @@ struct Runner : ITrampoline {
 };
 
 int main() {
+  static const size_t kSteps = 100'000'000;
 
-  Runner runner{20'000'000};
+  auto start = std::chrono::steady_clock::now();
+
+  Runner runner{kSteps};
   while (runner.StepsLeft() > 0) {
     runner.MakeStep();
   }
+
+  std::chrono::nanoseconds elapsed = std::chrono::steady_clock::now() - start;
+
+  std::cout << "Nanos per step = " << (1.0 * elapsed.count()) / kSteps << std::endl;
 
   return 0;
 }
