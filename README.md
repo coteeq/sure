@@ -1,17 +1,19 @@
-# Rails
+# Sure 
+
+(_Su_ spend + _Re_ sume)
 
 `ExecutionContext` for stackful coroutines and fibers
-
-## Requirements
-
-- x86-64
-- Clang++
 
 ## Features
 
 - Exceptions support
-- Annotations for Address Sanitizer
-- Annotations for Thread Sanitizer
+- Annotations for [AddressSanitizer](https://clang.llvm.org/docs/AddressSanitizer.html)
+- Annotations for [ThreadSanitizer](https://clang.llvm.org/docs/ThreadSanitizer.html)
+
+## Requirements
+
+- x86-64, ARMv8-A-64
+- Clang++
 
 ## References
 

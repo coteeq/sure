@@ -1,6 +1,6 @@
 #pragma once
 
-namespace rails {
+namespace sure {
 
 // All runnable entities (coroutines, fibers, generators)
 // should implement ITrampoline
@@ -12,4 +12,4 @@ struct ITrampoline {
   virtual void Run() = 0;
 };
 
-}  // namespace rails
+}  // namespace sure

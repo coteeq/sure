@@ -1,15 +1,15 @@
 #pragma once
 
-#include <rails/trampoline.hpp>
-#include <rails/machine_context.hpp>
-#include <rails/exceptions.hpp>
+#include <sure/trampoline.hpp>
+#include <sure/machine_context.hpp>
+#include <sure/exceptions.hpp>
 
 #include <wheels/memory/view.hpp>
 
 #include <cstdlib>
 #include <cstdint>
 
-namespace rails {
+namespace sure {
 
 // Execution Context =
 // 1) Machine context (registers) +
@@ -69,10 +69,10 @@ class ExecutionContext : public ITrampoline {
   void* fiber_;
 #endif
 
-#if defined(RAILS_CAPTURE_EXCEPTIONS_CONTEXT)
+#if defined(SURE_CAPTURE_EXCEPTIONS_CONTEXT)
   // 3) Exceptions
   ExceptionsContext exceptions_ctx_;
 #endif
 };
 
-}  // namespace rails
+}  // namespace sure

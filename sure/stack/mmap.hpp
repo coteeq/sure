@@ -5,7 +5,7 @@
 
 #include <cstdint>
 
-namespace rails {
+namespace sure {
 
 // Stack = MmapAllocation with guard page
 
@@ -36,4 +36,4 @@ class Stack {
   wheels::MmapAllocation allocation_;
 };
 
-}  // namespace rails
+}  // namespace sure

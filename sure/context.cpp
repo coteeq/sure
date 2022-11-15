@@ -1,4 +1,4 @@
-#include <rails/context.hpp>
+#include <sure/context.hpp>
 
 #include <sanitizer/asan_interface.h>
 #include <sanitizer/tsan_interface.h>
@@ -8,7 +8,7 @@
 #include <cstdint>
 #include <cstring>
 
-namespace rails {
+namespace sure {
 
 //////////////////////////////////////////////////////////////////////
 
@@ -62,7 +62,7 @@ void ExecutionContext::SwitchTo(ExecutionContext& target) {
   last = this;
 #endif
 
-#if defined(RAILS_CAPTURE_EXCEPTIONS_CONTEXT)
+#if defined(SURE_CAPTURE_EXCEPTIONS_CONTEXT)
   SwitchExceptionsContext(exceptions_ctx_, target.exceptions_ctx_);
 #endif
 
@@ -93,7 +93,7 @@ void ExecutionContext::ExitTo(ExecutionContext& target) {
   last = this;
 #endif
 
-#if defined(RAILS_CAPTURE_EXCEPTIONS_CONTEXT)
+#if defined(SURE_CAPTURE_EXCEPTIONS_CONTEXT)
   SwitchExceptionsContext(exceptions_ctx_, target.exceptions_ctx_);
 #endif
 
@@ -125,4 +125,4 @@ void ExecutionContext::Run() {
   user_trampoline_->Run();
 }
 
-}  // namespace rails
+}  // namespace sure

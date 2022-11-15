@@ -2,8 +2,8 @@
 
 #include <wheels/memory/view.hpp>
 
-namespace rails {
+namespace sure {
 
 wheels::ConstMemView ThisThreadStack();
 
-}  // namespace rails
+}  // namespace sure

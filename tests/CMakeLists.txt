@@ -6,5 +6,5 @@ file(GLOB TEST_SOURCES "./*.cpp")
 
 # All tests target
 
-add_executable(rails_tests ${TEST_SOURCES})
-target_link_libraries(rails_tests rails wheels)
+add_executable(sure_tests ${TEST_SOURCES})
+target_link_libraries(sure_tests sure wheels)

@@ -1,12 +1,14 @@
 #include <iostream>
 
-#include <rails/context.hpp>
-#include <rails/stack/mmap.hpp>
+#include <sure/context.hpp>
+#include <sure/stack/mmap.hpp>
 
 #include <chrono>
 #include <iostream>
 
-using namespace rails;
+using sure::ExecutionContext;
+using sure::Stack;
+using sure::ITrampoline;
 
 struct Runner : ITrampoline {
  public:

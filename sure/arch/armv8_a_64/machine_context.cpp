@@ -1,4 +1,4 @@
-#include <rails/arch/armv8_a_64/machine_context.hpp>
+#include <sure/arch/armv8_a_64/machine_context.hpp>
 
 #include <wheels/support/panic.hpp>
 
@@ -13,7 +13,7 @@ extern "C" void SwitchMachineContext(void* from_rsp, void* to_rsp);
 
 //////////////////////////////////////////////////////////////////////
 
-namespace rails {
+namespace sure {
 
 void MachineContextTrampoline(void*, void*, void*, void*, void*, void*, void*, void*, void* arg9) {
   ITrampoline* t = (ITrampoline*)arg9;
@@ -30,4 +30,4 @@ void MachineContext::SwitchTo(MachineContext& target) {
   SwitchMachineContext(&rsp_, &target.rsp_);
 }
 
-}  // namespace rails
+}  // namespace sure

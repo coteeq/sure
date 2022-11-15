@@ -1,13 +1,13 @@
 #pragma once
 
-#include <rails/trampoline.hpp>
+#include <sure/trampoline.hpp>
 
 #include <wheels/memory/view.hpp>
 
 // Switch between MachineContext-s
 extern "C" void SwitchMachineContext(void* from_rsp, void* to_rsp);
 
-namespace rails {
+namespace sure {
 
 // Target architecture: x86-64
 
@@ -21,4 +21,4 @@ struct MachineContext {
   }
 };
 
-}  // namespace rails
+}  // namespace sure

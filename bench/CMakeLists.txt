@@ -1,4 +1,4 @@
 ProjectLog("Benchmarks")
 
-add_executable(rails_benchmark main.cpp)
-target_link_libraries(rails_benchmark rails wheels)
+add_executable(sure_benchmark main.cpp)
+target_link_libraries(sure_benchmark sure wheels)

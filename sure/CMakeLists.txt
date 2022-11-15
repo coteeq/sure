@@ -23,15 +23,15 @@ set(LIB_ARCH_SOURCES
 
 enable_language(ASM)
 
-add_library(rails STATIC ${LIB_SOURCES} ${LIB_ARCH_SOURCES})
-target_include_directories(rails PUBLIC ${LIB_INCLUDE_PATH})
-target_link_libraries(rails PUBLIC wheels pthread)
+add_library(sure STATIC ${LIB_SOURCES} ${LIB_ARCH_SOURCES})
+target_include_directories(sure PUBLIC ${LIB_INCLUDE_PATH})
+target_link_libraries(sure PUBLIC wheels pthread)
 
 # Architecture compile definitions
 
-if (RAILS_EXCEPTIONS)
+if (SURE_EXCEPTIONS)
     ProjectLog("Capture exceptions context")
-    target_compile_definitions(rails PUBLIC RAILS_CAPTURE_EXCEPTIONS_CONTEXT)
+    target_compile_definitions(sure PUBLIC SURE_CAPTURE_EXCEPTIONS_CONTEXT)
 endif()
 
-target_compile_definitions(rails PUBLIC arch_${CONTEXT_ARCH})
+target_compile_definitions(sure PUBLIC arch_${CONTEXT_ARCH})
