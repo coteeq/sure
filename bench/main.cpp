@@ -27,7 +27,7 @@ struct Runner : ITrampoline {
   }
 
   // Trampoline
-  void Run() {
+  void Run() noexcept {
     while (steps_left_ > 1) {
       --steps_left_;
       self_.SwitchTo(parent_);

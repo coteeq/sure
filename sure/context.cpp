@@ -120,7 +120,7 @@ void ExecutionContext::AfterStart() {
 #endif
 }
 
-void ExecutionContext::Run() {
+void ExecutionContext::Run() noexcept {
   AfterStart();
   user_trampoline_->Run();
 }

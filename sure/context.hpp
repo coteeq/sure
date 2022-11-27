@@ -46,7 +46,7 @@ class ExecutionContext : public ITrampoline {
 
  private:
   // ITrampoline
-  void Run() override;
+  void Run() noexcept override;
 
   // Finalize first context switch
   void AfterStart();

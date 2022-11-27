@@ -22,7 +22,7 @@ struct Runner : ITrampoline {
   }
 
   // Trampoline
-  void Run() {
+  void Run() noexcept {
     std::cout << "Child" << std::endl;
 
     Foo();
