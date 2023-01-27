@@ -3,7 +3,7 @@
 #include <sanitizer/asan_interface.h>
 #include <sanitizer/tsan_interface.h>
 
-#include <wheels/support/compiler.hpp>
+#include <wheels/core/compiler.hpp>
 
 #include <cstdint>
 #include <cstring>

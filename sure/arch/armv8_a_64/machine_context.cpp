@@ -1,6 +1,6 @@
 #include <sure/arch/armv8_a_64/machine_context.hpp>
 
-#include <wheels/support/panic.hpp>
+#include <wheels/core/panic.hpp>
 
 //////////////////////////////////////////////////////////////////////
 
