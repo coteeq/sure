@@ -27,4 +27,16 @@ Stack Stack::AllocateBytes(size_t at_least) {
   return Stack::AllocatePages(/*count=*/pages);
 }
 
+wheels::MutableMemView Stack::MutView() {
+  return allocation_.MutView();
+}
+
+Stack Stack::Acquire(wheels::MutableMemView view) {
+  return Stack(MmapAllocation::Acquire(view));
+}
+
+wheels::MutableMemView Stack::Release() {
+  return allocation_.Release();
+}
+
 }  // namespace sure

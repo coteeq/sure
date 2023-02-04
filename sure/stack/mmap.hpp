@@ -25,9 +25,10 @@ class Stack {
     return allocation_.Size();
   }
 
-  wheels::MutableMemView MutView() {
-    return allocation_.MutView();
-  }
+  wheels::MutableMemView MutView();
+
+  static Stack Acquire(wheels::MutableMemView view);
+  wheels::MutableMemView Release();
 
  private:
   Stack(wheels::MmapAllocation allocation);
