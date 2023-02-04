@@ -13,9 +13,6 @@ class Stack {
  public:
   Stack() = default;
 
-  // Deprecated
-  static Stack AllocatePages(size_t count);
-
   static Stack AllocateBytes(size_t at_least);
 
   Stack(Stack&& that) = default;
@@ -32,6 +29,8 @@ class Stack {
 
  private:
   Stack(wheels::MmapAllocation allocation);
+
+  static Stack AllocatePages(size_t count);
 
  private:
   wheels::MmapAllocation allocation_;

@@ -9,7 +9,7 @@ using namespace sure;
 
 ExecutionContext main_ctx;
 
-Stack stack = Stack::AllocatePages(8);
+Stack stack = Stack::AllocateBytes(128 * 1024);
 ExecutionContext child_ctx;
 
 struct Runner : ITrampoline {
