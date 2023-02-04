@@ -15,7 +15,7 @@ struct Runner : ITrampoline {
   Runner(size_t steps)
       : steps_left_(steps),
         stack_(Stack::AllocateBytes(64 * 1024)) {
-    self_.Setup(stack_.View(), this);
+    self_.Setup(stack_.MutView(), this);
   }
 
   size_t StepsLeft() const {

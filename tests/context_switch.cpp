@@ -38,7 +38,7 @@ struct Runner : ITrampoline {
 TEST_SUITE(ExecutionContext1) {
   SIMPLE_TEST(SwitchContext) {
     Runner runner;
-    child_ctx.Setup(stack.View(), &runner);
+    child_ctx.Setup(stack.MutView(), &runner);
     //std::cout << child_ctx.rsp_ << std::endl;
 
     std::cout << "Parent" << std::endl;
