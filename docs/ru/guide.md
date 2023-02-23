@@ -37,6 +37,6 @@
 
 ### `ExitTo`
 
-При последнем переключении из контекста (т.е. в конце трамплина корутины / файбера) используйте [`ExitTo`](https://gitlab.com/Lipovsky/sure/-/blob/f51d01b54a529b445f1be51eae515629ba8c8001/sure/context.hpp#L43) вместо `SwitchTo`.
+При последнем переключении из контекста (т.е. в конце трамплина корутины / файбера) используйте `ExitTo` вместо `SwitchTo`.
 
 Этот граничный случай необходим для корректной работы проверок в [AddressSanitizer](https://clang.llvm.org/docs/AddressSanitizer.html).
