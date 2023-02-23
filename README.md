@@ -20,5 +20,12 @@
 
 ## References
 
+### Arch
+
 - [System V ABI / AMD64](https://www.uclibc.org/docs/psABI-x86_64.pdf)
 - [ARMv8-A ISA](https://documentation-service.arm.com/static/613a2c38674a052ae36ca307)
+
+### Exceptions
+
+- [C++ exceptions under the hood](https://monkeywritescode.blogspot.com/p/c-exceptions-under-hood.html)
+- [Exception Handling in LLVM](https://llvm.org/docs/ExceptionHandling.html)
