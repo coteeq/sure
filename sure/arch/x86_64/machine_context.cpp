@@ -1,7 +1,5 @@
 #include <sure/arch/x86_64/machine_context.hpp>
 
-#include <wheels/core/panic.hpp>
-
 //////////////////////////////////////////////////////////////////////
 
 extern "C" void* SetupMachineContext(void* stack,
