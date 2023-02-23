@@ -4,7 +4,8 @@
 
 `ExecutionContext` for stackful coroutines and fibers
 
-[Examples](https://gitlab.com/Lipovsky/sure-flow)
+- [Guide (ru)](docs/ru/guide.md)
+- [Examples](https://gitlab.com/Lipovsky/sure-flow)
 
 ## Features
 
