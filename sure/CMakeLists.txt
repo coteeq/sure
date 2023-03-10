@@ -17,9 +17,9 @@ set(LIB_SOURCES
 # Architecture-dependent sources
 
 set(LIB_ARCH_SOURCES
-        ${LIB_PATH}/arch/${CONTEXT_ARCH}/machine_context.hpp
-        ${LIB_PATH}/arch/${CONTEXT_ARCH}/machine_context.cpp
-        ${LIB_PATH}/arch/${CONTEXT_ARCH}/machine_context.S)
+        ${LIB_PATH}/arch/${SURE_ARCH}/machine_context.hpp
+        ${LIB_PATH}/arch/${SURE_ARCH}/machine_context.cpp
+        ${LIB_PATH}/arch/${SURE_ARCH}/machine_context.S)
 
 enable_language(ASM)
 
@@ -34,4 +34,4 @@ if (SURE_EXCEPTIONS)
     target_compile_definitions(sure PUBLIC SURE_CAPTURE_EXCEPTIONS_CONTEXT)
 endif()
 
-target_compile_definitions(sure PUBLIC arch_${CONTEXT_ARCH})
+target_compile_definitions(sure PUBLIC SURE_ARCH_${SURE_ARCH})
