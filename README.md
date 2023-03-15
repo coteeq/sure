@@ -13,6 +13,12 @@
 - Annotations for [AddressSanitizer](https://clang.llvm.org/docs/AddressSanitizer.html)
 - Annotations for [ThreadSanitizer](https://clang.llvm.org/docs/ThreadSanitizer.html)
 
+## Tuning
+
+### CMake Flags
+
+- `SURE_EXCEPTIONS` – enable / disable exception context
+
 ## Requirements
 
 - x86-64, ARMv8-A-64
