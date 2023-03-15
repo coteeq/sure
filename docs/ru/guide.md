@@ -4,6 +4,8 @@
 
 ## `ExecutionContext`
 
+Заголовок: `sure/context.hpp`
+
 Сохраненный контекст остановленного исполнения представлен классом [`ExecutionContext`](sure/context.hpp) и включает:
 - Регистры процессора
 - Контекст санитайзера
@@ -26,16 +28,28 @@
 
 ### Установка контекста
 
-Метод `ExecutionContext::Setup` принимает два аргумента:
-- `stack` – диапазон памяти для стека, на котором будет работать новое исполнение, в виде `MutableMemView`
+Метод `Setup` конструирует **новое исполнение**.  
+
+Метод принимает два аргумента:
+- `stack` – диапазон памяти стека, на котором будет работать новое исполнение, в виде `MutableMemView`
 - `trampoline` – указатель на реализацию интерфейса [`ITrampoline`](sure/trampoline.hpp) с единственным методом `Run`.
 
-После переключения через `SwitchTo` в установленный через `Setup` контекст исполнение начнется с вызова `trampoline->Run()` на стеке `stack`.
+После переключения через `SwitchTo` в установленный через `Setup` контекст на стеке `stack` начнется вызов `trampoline->Run()`.
 
-Пример использования: [TinyFibers](https://gitlab.com/Lipovsky/tinyfibers/)
+Пример использования: [TinyFibers](https://gitlab.com/Lipovsky/tinyfibers/-/blob/e91c30eefa8779c1443ddd8c0f802930dcaf0b92/tf/rt/fiber.cpp#L43)
 
 ### `ExitTo`
 
 При последнем переключении из контекста (т.е. в конце trampoline корутины / файбера) используйте `ExitTo` вместо `SwitchTo`.
 
 Этот граничный случай необходим для корректной работы проверок в [AddressSanitizer](https://clang.llvm.org/docs/AddressSanitizer.html).
+
+## `Stack`
+
+Заголовок: `sure/stack.hpp`
+
+Новый стек можно выделить с помощью статического конструктора `Stack::AllocateBytes(size_t at_least)`
+
+Стек будет иметь размер по крайней мере `at_least` байт, для него будет установлен guard page.
+
+С помощью метода `Stack::MutView` можно получить диапазон адресов стека в виде `MutableMemView` 
