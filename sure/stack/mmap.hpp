@@ -7,11 +7,11 @@
 
 namespace sure {
 
-// Stack = MmapAllocation with guard page
+// Stack = mmap allocation with guard page
 
 class Stack {
  public:
-  Stack() = default;
+  Stack() = delete;
 
   static Stack AllocateBytes(size_t at_least);
 
