@@ -15,17 +15,22 @@ class Stack {
 
   static Stack AllocateBytes(size_t at_least);
 
+  // Allocated memory will be released to the operating system
+  ~Stack() = default;
+
   Stack(Stack&& that) = default;
   Stack& operator=(Stack&& that) = default;
 
+  // Including guard page
   size_t AllocationSize() const {
     return allocation_.Size();
   }
 
   wheels::MutableMemView MutView();
 
-  static Stack Acquire(wheels::MutableMemView view);
+  // Release / acquire ownership for the underlying memory region
   wheels::MutableMemView Release();
+  static Stack Acquire(wheels::MutableMemView view);
 
  private:
   Stack(wheels::MmapAllocation allocation);
