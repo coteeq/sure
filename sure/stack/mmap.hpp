@@ -18,8 +18,8 @@ class Stack {
   // Allocated memory will be released to the operating system
   ~Stack() = default;
 
-  Stack(Stack&& that) = default;
-  Stack& operator=(Stack&& that) = default;
+  Stack(Stack&&) = default;
+  Stack& operator=(Stack&&) = default;
 
   // Including guard page
   size_t AllocationSize() const {
@@ -29,7 +29,7 @@ class Stack {
   wheels::MutableMemView MutView();
 
   // Release / acquire ownership for the underlying memory region
-  wheels::MutableMemView Release();
+  [[nodiscard("Memory leak")]] wheels::MutableMemView Release();
   static Stack Acquire(wheels::MutableMemView view);
 
  private:
