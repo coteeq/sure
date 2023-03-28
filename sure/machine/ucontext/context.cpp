@@ -2,30 +2,45 @@
 
 namespace sure {
 
-struct BrokenDownPtr {
+/*
+ * Workaround for legacy `ucontext` API:
+ *
+ * makecontext and ucontext trampoline expect arguments of type int even on 64-bit arch,
+ * so we have to break down pointer to ITrampoline to a couple of 32-bit integers
+ * (lo and hi part of the address) and pass them to trampoline separately to avoid UB
+ *
+ * Actually, any sane implementation of `ucontext` for 64-bit arch will support void*
+ * as trampoline argument, but formally it still will be UB
+ */
+
+namespace {
+
+static_assert(sizeof(int) == 4);
+
+struct PtrRepr {
   int lo;
   int hi;
 };
 
 union Ptr {
-  BrokenDownPtr bits;
-  ITrampoline* ptr;
+  PtrRepr repr;
+  void* addr;
 };
 
-static_assert(sizeof(int) == 4);
+}  // namespace
 
-static void MachineContextTrampoline(int hi, int lo) {
-  Ptr ptr{.bits = {lo, hi}};
+static void MachineContextTrampoline(int lo, int hi) {
+  Ptr ptr{.repr = {lo, hi}};
 
-  ITrampoline* t = ptr.ptr;
+  ITrampoline* t = (ITrampoline*)ptr.addr;
   t->Run();
 }
-
-typedef void (*UcontextTrampoline)(void);
 
 MachineContext::MachineContext() {
   //getcontext(&context);
 }
+
+typedef void (*UcontextTrampolineType)(void);
 
 void MachineContext::Setup(wheels::MutableMemView stack, ITrampoline* trampoline) {
   getcontext(&context);
@@ -35,9 +50,9 @@ void MachineContext::Setup(wheels::MutableMemView stack, ITrampoline* trampoline
   context.uc_stack.ss_size = stack.Size();
   context.uc_stack.ss_flags = 0;
 
-  Ptr ptr {.ptr = trampoline};
+  Ptr ptr{.addr = trampoline};
 
-  makecontext(&context, (UcontextTrampoline)MachineContextTrampoline, 2, ptr.bits.hi, ptr.bits.lo);
+  makecontext(&context, (UcontextTrampolineType)MachineContextTrampoline, 2, ptr.repr.lo, ptr.repr.hi);
 }
 
 void MachineContext::SwitchTo(MachineContext& target) {
