@@ -6,7 +6,7 @@ set(LIB_SOURCES
         ${LIB_PATH}/context.cpp
         ${LIB_PATH}/exceptions.hpp
         ${LIB_PATH}/exceptions.cpp
-        ${LIB_PATH}/machine_context.hpp
+        ${LIB_PATH}/machine/context.hpp
         ${LIB_PATH}/stack.hpp
         ${LIB_PATH}/trampoline.hpp
         ${LIB_PATH}/stack/mmap.hpp
@@ -16,16 +16,16 @@ set(LIB_SOURCES
 
 # Architecture-dependent sources
 
-ProjectLog("MachineContext implementation: ${SURE_ARCH}")
+ProjectLog("MachineContext: ${SURE_MACHINE_CONTEXT}")
 
-set(LIB_ARCH_SOURCES
-        ${LIB_PATH}/arch/${SURE_ARCH}/machine_context.hpp
-        ${LIB_PATH}/arch/${SURE_ARCH}/machine_context.cpp
-        ${LIB_PATH}/arch/${SURE_ARCH}/machine_context.S)
+set(LIB_MACHINE_CONTEXT_SOURCES
+        ${LIB_PATH}/machine/${SURE_MACHINE_CONTEXT}/context.hpp
+        ${LIB_PATH}/machine/${SURE_MACHINE_CONTEXT}/context.cpp
+        ${LIB_PATH}/machine/${SURE_MACHINE_CONTEXT}/context.S)
 
 enable_language(ASM)
 
-add_library(sure STATIC ${LIB_SOURCES} ${LIB_ARCH_SOURCES})
+add_library(sure STATIC ${LIB_SOURCES} ${LIB_MACHINE_CONTEXT_SOURCES})
 target_include_directories(sure PUBLIC ${LIB_INCLUDE_PATH})
 target_link_libraries(sure PUBLIC wheels pthread)
 
@@ -36,4 +36,4 @@ if (SURE_EXCEPTIONS)
     target_compile_definitions(sure PUBLIC SURE_CAPTURE_EXCEPTIONS_CONTEXT)
 endif()
 
-target_compile_definitions(sure PUBLIC SURE_ARCH_${SURE_ARCH})
+target_compile_definitions(sure PUBLIC SURE_MACHINE_CONTEXT_${SURE_MACHINE_CONTEXT})

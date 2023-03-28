@@ -1,7 +1,7 @@
 #pragma once
 
 #include <sure/trampoline.hpp>
-#include <sure/machine_context.hpp>
+#include <sure/machine/context.hpp>
 #include <sure/exceptions.hpp>
 
 #include <wheels/memory/view.hpp>

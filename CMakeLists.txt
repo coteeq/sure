@@ -16,7 +16,7 @@ option(SURE_UCONTEXT "Use ucontext" OFF)
 include(cmake/CompileOptions.cmake)
 
 include(cmake/Platform.cmake)
-include(cmake/Arch.cmake)
+include(cmake/MachineContext.cmake)
 
 add_subdirectory(sure)
 

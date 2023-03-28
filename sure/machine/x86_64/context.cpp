@@ -1,4 +1,4 @@
-#include <sure/arch/x86_64/machine_context.hpp>
+#include <sure/machine/x86_64/context.hpp>
 
 //////////////////////////////////////////////////////////////////////
 

@@ -1,4 +1,4 @@
-#include <sure/arch/ucontext/machine_context.hpp>
+#include <sure/machine/ucontext/context.hpp>
 
 namespace sure {
 

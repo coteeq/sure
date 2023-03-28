@@ -1,3 +1,3 @@
-#include <sure/arch/no/machine_context.hpp>
+#include <sure/machine/no/context.hpp>
 
 #error "MachineContext is not implemented"
