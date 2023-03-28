@@ -16,6 +16,8 @@ set(LIB_SOURCES
 
 # Architecture-dependent sources
 
+ProjectLog("MachineContext implementation: ${SURE_ARCH}")
+
 set(LIB_ARCH_SOURCES
         ${LIB_PATH}/arch/${SURE_ARCH}/machine_context.hpp
         ${LIB_PATH}/arch/${SURE_ARCH}/machine_context.cpp

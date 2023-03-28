@@ -18,6 +18,7 @@
 ### CMake Flags
 
 - `SURE_EXCEPTIONS` – enable / disable exception context
+- `SURE_UCONTEXT` – use [`ucontext`](https://man7.org/linux/man-pages/man3/makecontext.3.html)
 
 ## Requirements
 

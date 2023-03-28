@@ -11,6 +11,7 @@ add_subdirectory(third_party)
 
 option(SURE_DEVELOPER "Sure development mode" OFF)
 option(SURE_EXCEPTIONS "Sure exceptions context" ON)
+option(SURE_UCONTEXT "Use ucontext" OFF)
 
 include(cmake/CompileOptions.cmake)
 
