@@ -13,9 +13,11 @@ namespace sure {
  * as a trampoline argument, but formally it will still be UB
  */
 
-namespace {
-
+// Expectations: 64-bit arch, 4-byte int
+static_assert(sizeof(void*) == 8);
 static_assert(sizeof(int) == 4);
+
+namespace {
 
 struct PointerRepr {
   int lo;
