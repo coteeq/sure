@@ -17,22 +17,22 @@ namespace {
 
 static_assert(sizeof(int) == 4);
 
-struct PtrRepr {
+struct PointerRepr {
   int lo;
   int hi;
 };
 
-union Ptr {
-  PtrRepr repr;
+union Pointer {
+  PointerRepr repr;
   void* addr;
 };
 
 }  // namespace
 
 static void MachineContextTrampoline(int lo, int hi) {
-  Ptr ptr{.repr = {lo, hi}};
+  Pointer arg{.repr = {lo, hi}};
 
-  ITrampoline* t = (ITrampoline*)ptr.addr;
+  ITrampoline* t = (ITrampoline*)arg.addr;
   t->Run();
 }
 
@@ -50,9 +50,9 @@ void MachineContext::Setup(wheels::MutableMemView stack, ITrampoline* trampoline
   context.uc_stack.ss_size = stack.Size();
   context.uc_stack.ss_flags = 0;
 
-  Ptr ptr{.addr = trampoline};
+  Pointer t{.addr = trampoline};
 
-  makecontext(&context, (UcontextTrampolineType)MachineContextTrampoline, 2, ptr.repr.lo, ptr.repr.hi);
+  makecontext(&context, (UcontextTrampolineType)MachineContextTrampoline, 2, t.repr.lo, t.repr.hi);
 }
 
 void MachineContext::SwitchTo(MachineContext& target) {
