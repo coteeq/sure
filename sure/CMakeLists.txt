@@ -1,32 +1,32 @@
-get_filename_component(LIB_INCLUDE_PATH ".." ABSOLUTE)
-get_filename_component(LIB_PATH "." ABSOLUTE)
+get_filename_component(SURE_INCLUDE_PATH ".." ABSOLUTE)
+get_filename_component(SURE_PATH "." ABSOLUTE)
 
-set(LIB_SOURCES
-        ${LIB_PATH}/context.hpp
-        ${LIB_PATH}/context.cpp
-        ${LIB_PATH}/exceptions.hpp
-        ${LIB_PATH}/exceptions.cpp
-        ${LIB_PATH}/machine/context.hpp
-        ${LIB_PATH}/stack.hpp
-        ${LIB_PATH}/trampoline.hpp
-        ${LIB_PATH}/stack/mmap.hpp
-        ${LIB_PATH}/stack/mmap.cpp
-        ${LIB_PATH}/stack/thread.hpp
-        ${LIB_PATH}/stack/thread.cpp)
+set(SURE_SOURCES
+        ${SURE_PATH}/context.hpp
+        ${SURE_PATH}/context.cpp
+        ${SURE_PATH}/exceptions.hpp
+        ${SURE_PATH}/exceptions.cpp
+        ${SURE_PATH}/machine/context.hpp
+        ${SURE_PATH}/stack.hpp
+        ${SURE_PATH}/trampoline.hpp
+        ${SURE_PATH}/stack/mmap.hpp
+        ${SURE_PATH}/stack/mmap.cpp
+        ${SURE_PATH}/stack/thread.hpp
+        ${SURE_PATH}/stack/thread.cpp)
 
 # Architecture-dependent sources
 
 ProjectLog("MachineContext: ${SURE_MACHINE_CONTEXT}")
 
-set(LIB_MACHINE_CONTEXT_SOURCES
-        ${LIB_PATH}/machine/${SURE_MACHINE_CONTEXT}/context.hpp
-        ${LIB_PATH}/machine/${SURE_MACHINE_CONTEXT}/context.cpp
-        ${LIB_PATH}/machine/${SURE_MACHINE_CONTEXT}/context.S)
+set(SURE_MACHINE_CONTEXT_SOURCES
+        ${SURE_PATH}/machine/${SURE_MACHINE_CONTEXT}/context.hpp
+        ${SURE_PATH}/machine/${SURE_MACHINE_CONTEXT}/context.cpp
+        ${SURE_PATH}/machine/${SURE_MACHINE_CONTEXT}/context.S)
 
 enable_language(ASM)
 
-add_library(sure STATIC ${LIB_SOURCES} ${LIB_MACHINE_CONTEXT_SOURCES})
-target_include_directories(sure PUBLIC ${LIB_INCLUDE_PATH})
+add_library(sure STATIC ${SURE_SOURCES} ${SURE_MACHINE_CONTEXT_SOURCES})
+target_include_directories(sure PUBLIC ${SURE_INCLUDE_PATH})
 target_link_libraries(sure PUBLIC wheels pthread)
 
 # Architecture compile definitions
