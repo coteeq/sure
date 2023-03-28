@@ -7,6 +7,7 @@ set(SURE_SOURCES
         ${SURE_PATH}/exceptions.hpp
         ${SURE_PATH}/exceptions.cpp
         ${SURE_PATH}/machine/context.hpp
+        ${SURE_PATH}/sanitizer/context.hpp
         ${SURE_PATH}/stack.hpp
         ${SURE_PATH}/trampoline.hpp
         ${SURE_PATH}/stack/mmap.hpp

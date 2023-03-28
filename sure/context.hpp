@@ -2,6 +2,7 @@
 
 #include <sure/trampoline.hpp>
 #include <sure/machine/context.hpp>
+#include <sure/sanitizer/context.hpp>
 #include <sure/exceptions.hpp>
 
 #include <wheels/memory/view.hpp>
@@ -28,8 +29,6 @@ class ExecutionContext : public ITrampoline {
   // Non-movable
   ExecutionContext(ExecutionContext&&) = delete;
   ExecutionContext& operator=(ExecutionContext&&) = delete;
-
-  ~ExecutionContext();
 
   // Prepare execution context for running trampoline->Run()
   // on stack `stack`
@@ -58,16 +57,7 @@ class ExecutionContext : public ITrampoline {
   MachineContext machine_ctx_;
 
   // 2) Sanitizers context
-
-#if __has_feature(address_sanitizer)
-  const void* stack_;
-  size_t stack_size_;
-#endif
-
-#if __has_feature(thread_sanitizer)
-  bool hold_fiber_{false};
-  void* fiber_;
-#endif
+  SanitizerContext sanitizer_ctx_;
 
 #if defined(SURE_CAPTURE_EXCEPTIONS_CONTEXT)
   // 3) Exceptions
