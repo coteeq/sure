@@ -6,11 +6,11 @@ namespace sure {
  * Workaround for legacy `ucontext` API:
  *
  * makecontext and ucontext trampoline expect arguments of type int even on 64-bit arch,
- * so we have to break down pointer to ITrampoline to a couple of 32-bit integers
- * (lo and hi part of the address) and pass them to trampoline separately to avoid UB
+ * so we have to break down a pointer to ITrampoline to a couple of 32-bit integers
+ * (lo and hi part of the address) and pass them to the trampoline separately to avoid UB
  *
  * Actually, any sane implementation of `ucontext` for 64-bit arch will support void*
- * as trampoline argument, but formally it still will be UB
+ * as a trampoline argument, but formally it will still be UB
  */
 
 namespace {
