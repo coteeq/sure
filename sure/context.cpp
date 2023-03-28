@@ -2,51 +2,41 @@
 
 #include <wheels/core/compiler.hpp>
 
-#include <cstdint>
-#include <cstring>
-
 namespace sure {
-
-//////////////////////////////////////////////////////////////////////
 
 ExecutionContext::ExecutionContext() {
 }
 
 void ExecutionContext::Setup(wheels::MutableMemView stack, ITrampoline* trampoline) {
   user_trampoline_ = trampoline;
-  machine_ctx_.Setup(stack, this);
-  sanitizer_ctx_.Setup(stack);
+  machine_.Setup(stack, this);
+  sanitizer_.Setup(stack);
 }
 
 void ExecutionContext::SwitchTo(ExecutionContext& target) {
-#if defined(SURE_CAPTURE_EXCEPTIONS_CONTEXT)
-  SwitchExceptionsContext(exceptions_ctx_, target.exceptions_ctx_);
-#endif
+  exceptions_.SwitchTo(target.exceptions_);
 
-  sanitizer_ctx_.BeforeSwitch(target.sanitizer_ctx_);
+  sanitizer_.BeforeSwitch(target.sanitizer_);
 
   // Switch stacks
-  machine_ctx_.SwitchTo(target.machine_ctx_);
+  machine_.SwitchTo(target.machine_);
 
-  sanitizer_ctx_.AfterSwitch();
+  sanitizer_.AfterSwitch();
 }
 
 void ExecutionContext::ExitTo(ExecutionContext& target) {
-#if defined(SURE_CAPTURE_EXCEPTIONS_CONTEXT)
-  SwitchExceptionsContext(exceptions_ctx_, target.exceptions_ctx_);
-#endif
+  exceptions_.SwitchTo(target.exceptions_);
 
-  sanitizer_ctx_.BeforeExit(target.sanitizer_ctx_);
+  sanitizer_.BeforeExit(target.sanitizer_);
 
   // Switch stacks
-  machine_ctx_.SwitchTo(target.machine_ctx_);
+  machine_.SwitchTo(target.machine_);
 
   WHEELS_UNREACHABLE();
 }
 
-
 void ExecutionContext::AfterStart() {
-  sanitizer_ctx_.AfterStart();
+  sanitizer_.AfterStart();
 }
 
 void ExecutionContext::Run() noexcept {

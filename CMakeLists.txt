@@ -17,6 +17,7 @@ include(cmake/CompileOptions.cmake)
 
 include(cmake/Platform.cmake)
 include(cmake/MachineContext.cmake)
+include(cmake/ExceptionsContext.cmake)
 
 add_subdirectory(sure)
 

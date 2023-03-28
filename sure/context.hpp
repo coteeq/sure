@@ -3,7 +3,7 @@
 #include <sure/trampoline.hpp>
 #include <sure/machine/context.hpp>
 #include <sure/sanitizer/context.hpp>
-#include <sure/exceptions.hpp>
+#include <sure/exceptions/context.hpp>
 
 #include <wheels/memory/view.hpp>
 
@@ -53,16 +53,9 @@ class ExecutionContext : public ITrampoline {
  private:
   ITrampoline* user_trampoline_;
 
-  // 1) Machine context (registers)
-  MachineContext machine_ctx_;
-
-  // 2) Sanitizers context
-  SanitizerContext sanitizer_ctx_;
-
-#if defined(SURE_CAPTURE_EXCEPTIONS_CONTEXT)
-  // 3) Exceptions
-  ExceptionsContext exceptions_ctx_;
-#endif
+  MachineContext machine_;
+  SanitizerContext sanitizer_;
+  ExceptionsContext exceptions_;
 };
 
 }  // namespace sure
