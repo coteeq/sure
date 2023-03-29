@@ -13,7 +13,7 @@ struct SanitizerContext {
     }
   }
 
-  void Setup(wheels::MutableMemView) {
+  void Setup(wheels::MutableMemView /*stack*/) {
     hold_fiber_ = true;
     fiber_ = __tsan_create_fiber(0);
   }
