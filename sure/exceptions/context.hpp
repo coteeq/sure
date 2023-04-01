@@ -1,6 +1,6 @@
 #pragma once
 
-#if defined(UNIX) and defined(SURE_EXCEPTIONS_CONTEXT_unix)
+#if defined(SURE_EXCEPTIONS_CONTEXT_unix)
 
 #include <sure/exceptions/unix/context.hpp>
 
