@@ -7,14 +7,7 @@
 namespace sure {
 
 struct SanitizerContext {
-  ~SanitizerContext() {
-    if (hold_fiber_) {
-      __tsan_destroy_fiber(fiber_);
-    }
-  }
-
   void Setup(wheels::MutableMemView /*stack*/) {
-    hold_fiber_ = true;
     fiber_ = __tsan_create_fiber(0);
   }
 
@@ -28,16 +21,19 @@ struct SanitizerContext {
   }
 
   void AfterSwitch() {
-    // Nop
+    if (exit_from_ != nullptr) {
+      __tsan_destroy_fiber(exit_from_->fiber_);
+    }
   }
 
   void BeforeExit(SanitizerContext& target) {
+    target.exit_from_ = this;
     __tsan_switch_to_fiber(target.fiber_, 0);
   }
 
  private:
-  bool hold_fiber_{false};
   void* fiber_;
+  SanitizerContext* exit_from_{nullptr};
 };
 
 }  // namespace sure
