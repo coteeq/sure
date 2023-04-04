@@ -7,10 +7,14 @@
 
 using namespace sure;
 
+namespace {
+
 ExecutionContext main_ctx;
 
 Stack stack = Stack::AllocateBytes(128 * 1024);
 ExecutionContext child_ctx;
+
+}  // namespace anonymous
 
 struct Runner : ITrampoline {
 
@@ -36,7 +40,7 @@ struct Runner : ITrampoline {
 };
 
 TEST_SUITE(ExecutionContext1) {
-  SIMPLE_TEST(SwitchContext) {
+  SIMPLE_TEST(Switch) {
     Runner runner;
     child_ctx.Setup(stack.MutView(), &runner);
     //std::cout << child_ctx.rsp_ << std::endl;
