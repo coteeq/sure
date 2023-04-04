@@ -1,20 +1,13 @@
 #include <sure/context.hpp>
 #include <sure/stack/mmap.hpp>
 
+#include <wheels/memory/view_of.hpp>
+
 #include <wheels/test/test_framework.hpp>
 
 #include <iostream>
 
 using namespace sure;
-
-namespace {
-
-ExecutionContext main_ctx;
-
-Stack stack = Stack::AllocateBytes(128 * 1024);
-ExecutionContext child_ctx;
-
-}  // namespace anonymous
 
 struct Runner : ITrampoline {
 
@@ -31,24 +24,31 @@ struct Runner : ITrampoline {
 
     Foo();
 
-    child_ctx.SwitchTo(main_ctx);
+    ctx.SwitchTo(*main_ctx);
 
     std::cout << "Child" << std::endl;
 
-    child_ctx.ExitTo(main_ctx);
+    ctx.ExitTo(*main_ctx);
   }
+
+  char stack[128 * 1024];
+  sure::ExecutionContext ctx;
+  sure::ExecutionContext* main_ctx;
 };
 
 TEST_SUITE(ExecutionContext1) {
   SIMPLE_TEST(Switch) {
+    ExecutionContext main_ctx;
+
     Runner runner;
-    child_ctx.Setup(stack.MutView(), &runner);
+    runner.main_ctx = &main_ctx;
+    runner.ctx.Setup(wheels::MutViewOf(runner.stack), &runner);
     //std::cout << child_ctx.rsp_ << std::endl;
 
     std::cout << "Parent" << std::endl;
-    main_ctx.SwitchTo(child_ctx);
+    main_ctx.SwitchTo(runner.ctx);
     std::cout << "Parent" << std::endl;
-    main_ctx.SwitchTo(child_ctx);
+    main_ctx.SwitchTo(runner.ctx);
     std::cout << "Parent" << std::endl;
   }
 }

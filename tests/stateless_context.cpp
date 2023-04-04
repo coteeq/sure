@@ -7,41 +7,43 @@
 
 #include <iostream>
 
-namespace {
-
-sure::ExecutionContext main_ctx;
-
 sure::ExecutionContext* jumper_ctx;
 
-}  // namespace anonymous
-
 struct Jumper : sure::ITrampoline {
+  Jumper(sure::ExecutionContext* main)
+      : main_ctx(main) {
+  }
+
   void Run() noexcept final {
     std::cout << "Jumper started" << std::endl;
 
     sure::ExecutionContext my_ctx;
 
     jumper_ctx = &my_ctx;
-    my_ctx.SwitchTo(main_ctx);
+    my_ctx.SwitchTo(*main_ctx);
 
     std::cout << "Jumper resumed" << std::endl;
 
-    my_ctx.ExitTo(main_ctx);
+    my_ctx.ExitTo(*main_ctx);
   }
+
+  sure::ExecutionContext* main_ctx;
 
   char stack[64 * 1024];
 };
 
 void StatelessTest() {
-  Jumper jumper{};
+  sure::ExecutionContext main_ctx;
+
+  Jumper jumper{&main_ctx};
 
   {
-    sure::ExecutionContext ctx_init;
-    ctx_init.Setup(wheels::MutViewOf(jumper.stack), &jumper);
+    sure::ExecutionContext init_ctx;
+    init_ctx.Setup(wheels::MutViewOf(jumper.stack), &jumper);
 
     std::cout << "Switch to jumper" << std::endl;
 
-    main_ctx.SwitchTo(ctx_init);
+    main_ctx.SwitchTo(init_ctx);
 
     std::cout << "Main resumed" << std::endl;
   }
