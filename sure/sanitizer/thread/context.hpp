@@ -12,7 +12,7 @@ struct SanitizerContext {
   }
 
   void AfterStart() {
-    // Nop
+    After();
   }
 
   void BeforeSwitch(SanitizerContext& target) {
@@ -21,14 +21,20 @@ struct SanitizerContext {
   }
 
   void AfterSwitch() {
-    if (exit_from_ != nullptr) {
-      __tsan_destroy_fiber(exit_from_->fiber_);
-    }
+    After();
   }
 
   void BeforeExit(SanitizerContext& target) {
     target.exit_from_ = this;
     __tsan_switch_to_fiber(target.fiber_, 0);
+  }
+
+ private:
+  void After() {
+    if (exit_from_ != nullptr) {
+      __tsan_destroy_fiber(exit_from_->fiber_);
+      exit_from_ = nullptr;
+    }
   }
 
  private:
