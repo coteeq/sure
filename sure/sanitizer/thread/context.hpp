@@ -15,7 +15,10 @@ struct SanitizerContext {
     After();
   }
 
-  void BeforeSwitch(SanitizerContext& target) {
+  // NB: __tsan_switch_to_fiber should be called immediately before switch to fiber
+  // https://github.com/llvm/llvm-project/blob/712dfec1781db8aa92782b98cac5517db548b7f9/compiler-rt/include/sanitizer/tsan_interface.h#L150-L151
+  __attribute__((always_inline))
+  inline void BeforeSwitch(SanitizerContext& target) {
     fiber_ = __tsan_get_current_fiber();
     __tsan_switch_to_fiber(target.fiber_, 0);
   }
@@ -24,7 +27,9 @@ struct SanitizerContext {
     After();
   }
 
-  void BeforeExit(SanitizerContext& target) {
+  // NB: __tsan_switch_to_fiber should be called immediately before switch to fiber
+  __attribute__((always_inline))
+  inline void BeforeExit(SanitizerContext& target) {
     target.exit_from_ = this;
     __tsan_switch_to_fiber(target.fiber_, 0);
   }
