@@ -28,7 +28,6 @@ struct Jumper : sure::ITrampoline {
   }
 
   sure::ExecutionContext* main_ctx;
-
   char stack[64 * 1024];
 };
 
