@@ -17,7 +17,7 @@ namespace sure {
 // 2) [Address | Thread] sanitizer context +
 // 3) Exceptions context
 
-class ExecutionContext : public ITrampoline {
+class ExecutionContext : private ITrampoline {
  public:
   // Empty context, cannot be a target for SwitchTo
   ExecutionContext();
