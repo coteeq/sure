@@ -65,7 +65,7 @@ ASM_SYMBOL(SwitchMachineContext):
     # https://documentation-service.arm.com/static/613a2c38674a052ae36ca307
     # https://developer.arm.com/documentation/den0024/a/The-ABI-for-ARM-64-bit-Architecture/Register-use-in-the-AArch64-Procedure-Call-Standard/Parameters-in-general-purpose-registers
   
-    str     x30, [sp, #-16]!
+    stp     x30, x29, [sp, #-16]!
     stp     x20, x19, [sp, #-16]!
     stp     x22, x21, [sp, #-16]!
     stp     x24, x23, [sp, #-16]!
@@ -93,7 +93,7 @@ ASM_SYMBOL(SwitchMachineContext):
     ldp     x24, x23, [sp], #16
     ldp     x22, x21, [sp], #16
     ldp     x20, x19, [sp], #16
-    ldr     x30, [sp], #16
+    ldp     x30, x29, [sp], #16
 
     # Pop current SwitchMachineContext frame from target stack
     
