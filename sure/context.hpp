@@ -27,8 +27,8 @@ class ExecutionContext : private ITrampoline {
   ExecutionContext& operator=(const ExecutionContext&) = delete;
 
   // Non-movable
-  ExecutionContext(ExecutionContext&&) = delete;
-  ExecutionContext& operator=(ExecutionContext&&) = delete;
+  ExecutionContext(ExecutionContext&&) = default;
+  ExecutionContext& operator=(ExecutionContext&&) = default;
 
   // Prepare execution context for running trampoline->Run()
   // on stack `stack`
